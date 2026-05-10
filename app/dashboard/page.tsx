@@ -5,6 +5,8 @@ import { LogoutButton } from "@/components/auth/logout-button";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getMissingSupabaseMessage } from "@/lib/supabase/config";
 import { redirect } from "next/navigation";
+import { getProfileByUserId } from "@/lib/profile/queries";
+import { ProfileSummary } from "@/components/profile/profile-summary";
 
 export default async function DashboardPage() {
   const supabase = await createSupabaseServerClient();
@@ -34,6 +36,8 @@ export default async function DashboardPage() {
     redirect("/login?redirectTo=/dashboard");
   }
 
+  const { data: profile } = await getProfileByUserId(supabase, user.id);
+
   return (
     <main className="min-h-screen">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
@@ -49,10 +53,25 @@ export default async function DashboardPage() {
             Tableau de bord After Check-in
           </h1>
           <p className="mt-4 max-w-2xl leading-7 text-white/72">
-            Ton compte est actif. La prochaine etape sera la creation du profil,
-            puis l&apos;activation de la visibilite temporaire.
+            {profile
+              ? "Ton profil est enregistre. La prochaine etape sera l activation de la visibilite temporaire."
+              : "Ton compte est actif. Complete ton profil pour continuer le parcours MVP."}
           </p>
         </div>
+
+        {profile ? (
+          <div className="mt-6">
+            <ProfileSummary profile={profile} />
+          </div>
+        ) : (
+          <div className="mt-6 rounded-md border border-gold-400/30 bg-gold-400/14 p-5 text-night-950">
+            <h2 className="text-xl font-bold tracking-normal">Profil incomplet</h2>
+            <p className="mt-2 leading-7">
+              Ajoute ton pseudo, ton age, ta zone approximative et quelques infos
+              utiles avant d&apos;activer ta visibilite.
+            </p>
+          </div>
+        )}
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <DashboardCard icon={UserRound} title="Profil" text="Pseudo, photo, bio et zone." />
@@ -62,7 +81,7 @@ export default async function DashboardPage() {
         </div>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <ButtonLink href="/profile">Completer le profil</ButtonLink>
+          <ButtonLink href="/profile">{profile ? "Voir / modifier le profil" : "Completer le profil"}</ButtonLink>
           <ButtonLink href="/" variant="secondary">
             Retour accueil
           </ButtonLink>

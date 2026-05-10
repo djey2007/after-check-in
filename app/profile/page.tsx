@@ -6,7 +6,8 @@ import { LogoutButton } from "@/components/auth/logout-button";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getMissingSupabaseMessage } from "@/lib/supabase/config";
 import { ProfileForm } from "@/components/profile/profile-form";
-import type { Profile } from "@/lib/profile/types";
+import { getProfileByUserId } from "@/lib/profile/queries";
+import { ProfileSummary } from "@/components/profile/profile-summary";
 
 export default async function ProfilePage() {
   const supabase = await createSupabaseServerClient();
@@ -36,11 +37,7 @@ export default async function ProfilePage() {
     redirect("/login?redirectTo=/profile");
   }
 
-  const { data: profile, error } = await supabase
-    .from("profiles")
-    .select("id, username, age, avatar_url, bio, languages, interests, travel_type, approx_area, is_adult_confirmed")
-    .eq("id", user.id)
-    .maybeSingle<Profile>();
+  const { data: profile, error } = await getProfileByUserId(supabase, user.id);
 
   const isMissingProfilesTable =
     error &&
@@ -83,6 +80,12 @@ export default async function ProfilePage() {
           </aside>
 
           <section className="rounded-md border border-night-900/10 bg-white p-6 shadow-sm">
+            {profile ? (
+              <div className="mb-6">
+                <ProfileSummary profile={profile} />
+              </div>
+            ) : null}
+
             {isMissingProfilesTable ? (
               <div className="rounded-md border border-red-200 bg-red-50 p-5 text-red-800">
                 <h2 className="text-xl font-bold tracking-normal">Table profil manquante</h2>
