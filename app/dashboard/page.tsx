@@ -62,7 +62,7 @@ export default async function DashboardPage() {
         </div>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <ButtonLink href="/signup">Completer le profil</ButtonLink>
+          <ButtonLink href="/profile">Completer le profil</ButtonLink>
           <ButtonLink href="/" variant="secondary">
             Retour accueil
           </ButtonLink>
