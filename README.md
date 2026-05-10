@@ -62,6 +62,24 @@ Pour l'authentification email Supabase:
 - Ajouter `http://localhost:3000/auth/callback` dans les redirect URLs de developpement.
 - Ajouter `https://after-check-in.vercel.app/auth/callback` dans les redirect URLs de production.
 
+## Base de donnees Supabase
+
+Les migrations SQL sont dans:
+
+```text
+supabase/migrations/
+```
+
+Pour creer la table de profils:
+
+1. Ouvrir Supabase.
+2. Aller dans **SQL Editor**.
+3. Copier le contenu de `supabase/migrations/0001_profiles.sql`.
+4. Cliquer sur **Run**.
+
+La table `profiles` active Row Level Security et permet a chaque utilisateur
+connecte de creer, lire et modifier uniquement son propre profil.
+
 ## Documents projet
 
 - [Product brief](docs/product-brief.md)

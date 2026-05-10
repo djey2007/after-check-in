@@ -1,10 +1,12 @@
 import { redirect } from "next/navigation";
-import { ArrowLeft, Camera, Languages, MapPinned, Sparkles, UserRound } from "lucide-react";
+import { ArrowLeft, ShieldCheck, UserRound } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getMissingSupabaseMessage } from "@/lib/supabase/config";
+import { ProfileForm } from "@/components/profile/profile-form";
+import type { Profile } from "@/lib/profile/types";
 
 export default async function ProfilePage() {
   const supabase = await createSupabaseServerClient();
@@ -34,6 +36,17 @@ export default async function ProfilePage() {
     redirect("/login?redirectTo=/profile");
   }
 
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("id, username, age, avatar_url, bio, languages, interests, travel_type, approx_area, is_adult_confirmed")
+    .eq("id", user.id)
+    .maybeSingle<Profile>();
+
+  const isMissingProfilesTable =
+    error &&
+    (error.message.toLowerCase().includes("profiles") ||
+      error.message.toLowerCase().includes("schema cache"));
+
   return (
     <main className="min-h-screen">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
@@ -56,26 +69,35 @@ export default async function ProfilePage() {
               Ton profil
             </h1>
             <p className="mt-3 leading-7 text-night-900/72">
-              Cette page pose le formulaire du profil MVP. La prochaine etape
-              connectera ces champs a la table Supabase `profiles`.
+              Complete ton profil pour pouvoir ensuite choisir ton intention et
+              activer ta visibilite temporaire.
             </p>
             <p className="mt-5 rounded-md bg-lagoon-100 px-4 py-3 text-sm font-semibold leading-6 text-night-950">
               Connecte avec {user.email}
             </p>
+            {profile ? (
+              <p className="mt-3 rounded-md bg-gold-400/20 px-4 py-3 text-sm font-semibold leading-6 text-night-950">
+                Profil deja enregistre. Tu peux le modifier.
+              </p>
+            ) : null}
           </aside>
 
           <section className="rounded-md border border-night-900/10 bg-white p-6 shadow-sm">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <ProfileField icon={UserRound} label="Pseudo" value="A renseigner" />
-              <ProfileField icon={Camera} label="Photo de profil" value="Upload a venir" />
-              <ProfileField icon={Languages} label="Langues parlees" value="Francais, anglais..." />
-              <ProfileField icon={Sparkles} label="Centres d'interet" value="Diner, sport, culture..." />
-              <ProfileField icon={MapPinned} label="Zone approximative" value="Ex: Bordeaux centre" />
-              <ProfileField icon={UserRound} label="Type de deplacement" value="Pro, perso ou les deux" />
-            </div>
+            {isMissingProfilesTable ? (
+              <div className="rounded-md border border-red-200 bg-red-50 p-5 text-red-800">
+                <h2 className="text-xl font-bold tracking-normal">Table profil manquante</h2>
+                <p className="mt-3 leading-7">
+                  Execute la migration SQL `supabase/migrations/0001_profiles.sql`
+                  dans Supabase, puis recharge cette page.
+                </p>
+              </div>
+            ) : (
+              <ProfileForm profile={profile ?? null} />
+            )}
 
             <div className="mt-6 rounded-md border border-night-900/10 bg-night-950 p-5 text-white">
-              <h2 className="text-xl font-bold tracking-normal">Regles de confidentialite</h2>
+              <ShieldCheck className="h-6 w-6 text-lagoon-400" />
+              <h2 className="mt-4 text-xl font-bold tracking-normal">Regles de confidentialite</h2>
               <p className="mt-3 leading-7 text-white/72">
                 Aucun numero de chambre, aucune distance exacte et aucune position GPS
                 precise ne seront demandes dans le profil.
@@ -87,22 +109,3 @@ export default async function ProfilePage() {
     </main>
   );
 }
-
-function ProfileField({
-  icon: Icon,
-  label,
-  value
-}: {
-  icon: typeof UserRound;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="rounded-md border border-night-900/10 p-4">
-      <Icon className="h-5 w-5 text-lagoon-500" />
-      <p className="mt-4 text-sm font-semibold text-night-900/62">{label}</p>
-      <p className="mt-1 font-bold text-night-950">{value}</p>
-    </div>
-  );
-}
-
