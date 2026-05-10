@@ -3,7 +3,7 @@ begin
   if not exists (select 1 from pg_type where typname = 'contact_request_status') then
     create type contact_request_status as enum ('pending', 'accepted', 'declined', 'cancelled');
   end if;
-end
+end;
 $$;
 
 create table if not exists public.contact_requests (
