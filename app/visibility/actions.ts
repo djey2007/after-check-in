@@ -53,7 +53,7 @@ export async function activateVisibilityAction(
 
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
-      .select("approx_area, is_suspended, deleted_at")
+      .select("approx_area, location_cell, is_suspended, deleted_at")
       .eq("id", user.id)
       .maybeSingle();
 
@@ -88,6 +88,7 @@ export async function activateVisibilityAction(
       user_id: user.id,
       intent,
       approx_area: profile.approx_area,
+      location_cell: profile.location_cell,
       visible_until: visibleUntil,
       ended_at: null
     });
@@ -130,4 +131,3 @@ export async function stopVisibilityAction() {
   revalidatePath("/dashboard");
   revalidatePath("/visibility");
 }
-

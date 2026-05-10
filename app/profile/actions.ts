@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { ProfileFormState, TravelType } from "@/lib/profile/types";
+import { isApproxLocationCell } from "@/lib/location/cell";
 
 function splitList(value: FormDataEntryValue | null) {
   return String(value ?? "")
@@ -53,6 +54,7 @@ export async function saveProfileAction(
     const age = Number(formData.get("age"));
     const bio = String(formData.get("bio") ?? "").trim();
     const approxArea = String(formData.get("approx_area") ?? "").trim();
+    const locationCell = String(formData.get("location_cell") ?? "").trim();
     const travelType = String(formData.get("travel_type") ?? "business") as TravelType;
     const languages = splitList(formData.get("languages"));
     const interests = splitList(formData.get("interests"));
@@ -80,6 +82,10 @@ export async function saveProfileAction(
       };
     }
 
+    if (locationCell && !isApproxLocationCell(locationCell)) {
+      return { status: "error", message: "La zone GPS approximative est invalide." };
+    }
+
     if (!["business", "personal", "both"].includes(travelType)) {
       return { status: "error", message: "Type de deplacement invalide." };
     }
@@ -93,6 +99,7 @@ export async function saveProfileAction(
       interests,
       travel_type: travelType,
       approx_area: approxArea,
+      location_cell: locationCell || null,
       is_adult_confirmed: true
     });
 
@@ -115,4 +122,3 @@ export async function saveProfileAction(
     return { status: "error", message: getErrorMessage(error) };
   }
 }
-

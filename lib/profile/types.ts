@@ -10,6 +10,7 @@ export type Profile = {
   interests: string[];
   travel_type: TravelType;
   approx_area: string;
+  location_cell: string | null;
   is_adult_confirmed: boolean;
 };
 
@@ -28,4 +29,3 @@ export const travelTypeLabels: Record<TravelType, string> = {
   personal: "Personnel",
   both: "Les deux"
 };
-

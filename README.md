@@ -112,6 +112,17 @@ Les tables `contact_requests`, `conversations` et `messages` activent Row
 Level Security. Le chat est lisible et utilisable uniquement par les deux
 participants d'une conversation acceptee.
 
+Pour activer la geolocalisation approximative optionnelle:
+
+1. Ouvrir Supabase.
+2. Aller dans **SQL Editor**.
+3. Copier le contenu de `supabase/migrations/0005_approx_location.sql`.
+4. Cliquer sur **Run**.
+
+La position GPS exacte n'est jamais stockee. Le navigateur calcule une cellule
+approximative et la decouverte utilise cette cellule quand elle existe, avec un
+repli sur la zone texte.
+
 ## Documents projet
 
 - [Product brief](docs/product-brief.md)
