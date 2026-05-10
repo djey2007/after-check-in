@@ -85,6 +85,9 @@ export default async function DashboardPage() {
           <ButtonLink href="/visibility" variant="secondary">
             Activer la visibilite
           </ButtonLink>
+          <ButtonLink href="/discover" variant="secondary">
+            Decouvrir
+          </ButtonLink>
           <ButtonLink href="/" variant="secondary">
             Retour accueil
           </ButtonLink>

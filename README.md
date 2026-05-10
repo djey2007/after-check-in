@@ -90,6 +90,17 @@ Pour activer la visibilite temporaire:
 La table `visibility_sessions` stocke l'intention du moment et la date
 d'expiration de visibilite.
 
+Pour la decouverte:
+
+1. Ouvrir Supabase.
+2. Aller dans **SQL Editor**.
+3. Copier le contenu de `supabase/migrations/0003_discovery.sql`.
+4. Cliquer sur **Run**.
+
+La fonction `get_discoverable_profiles()` renvoie uniquement les profils
+visibles dans la meme zone approximative, en excluant les comptes bloques,
+suspendus ou expires.
+
 ## Documents projet
 
 - [Product brief](docs/product-brief.md)
