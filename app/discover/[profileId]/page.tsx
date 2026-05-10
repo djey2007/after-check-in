@@ -7,6 +7,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getMissingSupabaseMessage } from "@/lib/supabase/config";
 import { getDiscoverableProfiles } from "@/lib/discovery/queries";
 import { getProfileByUserId } from "@/lib/profile/queries";
+import { ContactRequestForm } from "@/components/contact/contact-request-form";
 
 export default async function DiscoverProfilePage({
   params
@@ -116,13 +117,10 @@ export default async function DiscoverProfilePage({
               <Clock3 className="h-6 w-6 text-lagoon-400" />
               <h2 className="mt-4 text-xl font-bold tracking-normal">Demande de contact</h2>
               <p className="mt-3 leading-7 text-white/72">
-                Le flux de demande / acceptation vient juste apres la decouverte.
-                On le branche ensuite pour n&apos;ouvrir le chat qu&apos;apres consentement.
+                Envoie une demande simple. Le chat ne sera ouvert qu&apos;apres acceptation.
               </p>
-              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                <ButtonLink href="/discover" className="w-full sm:w-auto">
-                  Revenir a la liste
-                </ButtonLink>
+              <div className="mt-5">
+                <ContactRequestForm receiverId={targetProfile.id} />
               </div>
             </div>
           </section>

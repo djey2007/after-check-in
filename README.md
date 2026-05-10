@@ -101,6 +101,17 @@ La fonction `get_discoverable_profiles()` renvoie uniquement les profils
 visibles dans la meme zone approximative, en excluant les comptes bloques,
 suspendus ou expires.
 
+Pour les demandes de contact et le chat:
+
+1. Ouvrir Supabase.
+2. Aller dans **SQL Editor**.
+3. Copier le contenu de `supabase/migrations/0004_contact_chat.sql`.
+4. Cliquer sur **Run**.
+
+Les tables `contact_requests`, `conversations` et `messages` activent Row
+Level Security. Le chat est lisible et utilisable uniquement par les deux
+participants d'une conversation acceptee.
+
 ## Documents projet
 
 - [Product brief](docs/product-brief.md)

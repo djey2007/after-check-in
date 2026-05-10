@@ -88,6 +88,9 @@ export default async function DashboardPage() {
           <ButtonLink href="/discover" variant="secondary">
             Decouvrir
           </ButtonLink>
+          <ButtonLink href="/requests" variant="secondary">
+            Demandes
+          </ButtonLink>
           <ButtonLink href="/" variant="secondary">
             Retour accueil
           </ButtonLink>
