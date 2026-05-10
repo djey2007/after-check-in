@@ -18,6 +18,26 @@ After Check-in n'est pas une application adulte. Le produit doit rester social, 
 - Images de profil: Supabase Storage
 - Hebergement cible: Vercel
 
+## Lancer le projet web
+
+```bash
+npm install
+npm run dev
+```
+
+L'application est ensuite disponible sur:
+
+```text
+http://localhost:3000
+```
+
+Commandes utiles:
+
+```bash
+npm run typecheck
+npm run build
+```
+
 ## Documents projet
 
 - [Product brief](docs/product-brief.md)
@@ -85,4 +105,3 @@ Chaque etape doit produire une version testable separement.
 - Rencontres recommandees dans des lieux publics: lobby, bar, restaurant.
 - Suppression de compte prevue des le depart.
 - Confidentialite et moderation integrees au modele de donnees.
-
