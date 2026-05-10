@@ -112,6 +112,10 @@ export async function loginAction(
 
     redirect(redirectTo === "/dashboard" ? "/dashboard" : "/dashboard");
   } catch (error) {
+    if (isNextRedirect(error)) {
+      throw error;
+    }
+
     return { status: "error", message: getAuthExceptionMessage(error) };
   }
 }
