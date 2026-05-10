@@ -1,20 +1,15 @@
-do $$
-begin
-  if not exists (select 1 from pg_type where typname = 'contact_request_status') then
-    create type contact_request_status as enum ('pending', 'accepted', 'declined', 'cancelled');
-  end if;
-end;
-$$;
-
 create table if not exists public.contact_requests (
   id uuid primary key default gen_random_uuid(),
   sender_id uuid not null references public.profiles(id) on delete cascade,
   receiver_id uuid not null references public.profiles(id) on delete cascade,
-  status contact_request_status not null default 'pending',
+  status text not null default 'pending',
   message text default '',
   created_at timestamptz not null default now(),
   responded_at timestamptz,
   constraint contact_requests_no_self check (sender_id <> receiver_id),
+  constraint contact_requests_status_check check (
+    status in ('pending', 'accepted', 'declined', 'cancelled')
+  ),
   constraint contact_requests_message_length check (char_length(coalesce(message, '')) <= 240)
 );
 
