@@ -80,6 +80,16 @@ Pour creer la table de profils:
 La table `profiles` active Row Level Security et permet a chaque utilisateur
 connecte de creer, lire et modifier uniquement son propre profil.
 
+Pour activer la visibilite temporaire:
+
+1. Ouvrir Supabase.
+2. Aller dans **SQL Editor**.
+3. Copier le contenu de `supabase/migrations/0002_visibility.sql`.
+4. Cliquer sur **Run**.
+
+La table `visibility_sessions` stocke l'intention du moment et la date
+d'expiration de visibilite.
+
 ## Documents projet
 
 - [Product brief](docs/product-brief.md)
