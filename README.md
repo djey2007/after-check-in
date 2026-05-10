@@ -38,6 +38,30 @@ npm run typecheck
 npm run build
 ```
 
+## Configuration Supabase
+
+Creer un fichier `.env.local` a partir de `.env.example`:
+
+```bash
+cp .env.example .env.local
+```
+
+Variables requises:
+
+```text
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
+
+Dans Vercel, ajouter les memes variables dans **Project Settings > Environment Variables**.
+
+Pour l'authentification email Supabase:
+
+- Activer Email provider dans Supabase Auth.
+- Ajouter `http://localhost:3000/auth/callback` dans les redirect URLs de developpement.
+- Ajouter `https://after-check-in.vercel.app/auth/callback` dans les redirect URLs de production.
+
 ## Documents projet
 
 - [Product brief](docs/product-brief.md)
