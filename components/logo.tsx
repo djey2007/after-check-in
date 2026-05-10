@@ -9,39 +9,26 @@ type LogoProps = {
 
 export function Logo({ className, compact = false, size = "default" }: LogoProps) {
   const isLarge = size === "large";
-  const imageSize = isLarge ? 112 : compact ? 56 : 80;
+  const imageWidth = isLarge ? 360 : compact ? 180 : 260;
+  const imageHeight = Math.round(imageWidth / 2.13);
 
   return (
-    <div className={cn("flex items-center", isLarge ? "gap-5" : "gap-4", className)}>
+    <div className={cn("flex items-center", className)}>
       <Image
-        src="/brand/after-check-in-logo.png"
+        src="/brand/after-check-in-logo-cropped.png"
         alt="After Check-in"
-        width={imageSize}
-        height={imageSize}
+        width={imageWidth}
+        height={imageHeight}
         className={cn(
-          "rounded-md object-contain",
-          isLarge ? "h-20 w-20 sm:h-28 sm:w-28" : "h-14 w-14 sm:h-16 sm:w-16"
+          "h-auto rounded-md object-contain",
+          isLarge
+            ? "w-44 sm:w-72 lg:w-80"
+            : compact
+              ? "w-28 sm:w-36"
+              : "w-40 sm:w-52"
         )}
         priority
       />
-      <div className="leading-none">
-        <p
-          className={cn(
-            "font-bold tracking-normal text-night-950",
-            isLarge ? "text-2xl sm:text-4xl" : "text-xl sm:text-2xl"
-          )}
-        >
-          After
-        </p>
-        <p
-          className={cn(
-            "font-bold tracking-normal text-night-950",
-            isLarge ? "text-2xl sm:text-4xl" : "text-xl sm:text-2xl"
-          )}
-        >
-          Check-in
-        </p>
-      </div>
     </div>
   );
 }
