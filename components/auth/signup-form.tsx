@@ -1,10 +1,12 @@
 "use client";
 
+import { CheckCircle2 } from "lucide-react";
 import { useActionState } from "react";
 import { signUpAction } from "@/app/auth/actions";
 import type { AuthFormState } from "@/lib/auth/form-state";
 import { AuthMessage } from "@/components/auth/auth-message";
 import { SubmitButton } from "@/components/auth/submit-button";
+import { ButtonLink } from "@/components/ui/button";
 
 type SignupFormProps = {
   initialState: AuthFormState;
@@ -12,6 +14,22 @@ type SignupFormProps = {
 
 export function SignupForm({ initialState }: SignupFormProps) {
   const [state, action] = useActionState(signUpAction, initialState);
+
+  if (state.status === "success") {
+    return (
+      <div className="mt-8 rounded-md border border-lagoon-500/20 bg-lagoon-100 p-5 text-night-950">
+        <CheckCircle2 className="h-7 w-7 text-lagoon-500" />
+        <h2 className="mt-4 text-xl font-bold tracking-normal">Compte cree</h2>
+        <p className="mt-3 leading-7">{state.message}</p>
+        <div className="mt-5 grid gap-3">
+          <ButtonLink href="/login">Aller a la connexion</ButtonLink>
+          <ButtonLink href="/" variant="ghost">
+            Retour a l&apos;accueil
+          </ButtonLink>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form action={action} className="mt-8 grid gap-4">
