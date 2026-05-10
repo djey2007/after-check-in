@@ -1,5 +1,5 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
-import Link, { type LinkProps } from "next/link";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 type ButtonVariant = "primary" | "secondary" | "ghost";
@@ -25,7 +25,7 @@ export function Button({ className, variant = "primary", ...props }: ButtonProps
 }
 
 type ButtonLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
-  href: LinkProps<string>["href"];
+  href: string;
   children: ReactNode;
   variant?: ButtonVariant;
 };
@@ -37,6 +37,10 @@ export function ButtonLink({
   ...props
 }: ButtonLinkProps) {
   return (
-    <Link href={href} className={cn(baseClass, variants[variant], className)} {...props} />
+    <Link
+      href={href as never}
+      className={cn(baseClass, variants[variant], className)}
+      {...props}
+    />
   );
 }
