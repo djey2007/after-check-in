@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { ArrowRight, Clock3, MapPinned, UserRound } from "lucide-react";
+import { ArrowRight, Clock3, MapPinned } from "lucide-react";
 import type { DiscoverableProfile } from "@/lib/discovery/types";
 import { visibilityIntentLabels } from "@/lib/visibility/types";
 import { travelTypeLabels } from "@/lib/profile/types";
+import { AvatarImage } from "@/components/ui/avatar-image";
 
 type DiscoverCardProps = {
   profile: DiscoverableProfile;
@@ -25,17 +26,11 @@ export function DiscoverCard({ profile }: DiscoverCardProps) {
     <article className="group rounded-md border border-night-900/10 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-lagoon-500/35 hover:shadow-xl hover:shadow-night-950/8">
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-14 w-14 items-center justify-center rounded-md bg-lagoon-100 text-night-950 ring-4 ring-lagoon-100/50">
-            {profile.avatar_url ? (
-              <img
-                src={profile.avatar_url}
-                alt={profile.username}
-                className="h-full w-full rounded-md object-cover"
-              />
-            ) : (
-              <UserRound className="h-6 w-6" />
-            )}
-          </div>
+          <AvatarImage
+            src={profile.avatar_url}
+            alt={profile.username}
+            className="ring-4 ring-lagoon-100/50"
+          />
           <div>
             <h2 className="text-lg font-bold tracking-normal text-night-950">{profile.username}</h2>
             <p className="text-sm font-semibold text-night-900/62">

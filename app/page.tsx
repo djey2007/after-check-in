@@ -15,6 +15,7 @@ import {
   UserRound,
   Utensils
 } from "lucide-react";
+import Link from "next/link";
 import { ButtonLink } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { PublicHeader } from "@/components/public-header";
@@ -209,8 +210,8 @@ export default function Home() {
           <Logo compact />
           <nav className="flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold text-night-900/68">
             <a href="mailto:contact@after-check-in.app">Contact</a>
-            <a href="#confidentialite">Confidentialité</a>
-            <a href="#conditions">Conditions</a>
+            <Link href={"/privacy" as never}>Confidentialité</Link>
+            <Link href={"/terms" as never}>Conditions</Link>
           </nav>
           <p className="text-sm font-semibold text-night-900/54">
             © 2026 After Check-in. Tous droits réservés.

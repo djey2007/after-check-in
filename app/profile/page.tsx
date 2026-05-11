@@ -5,8 +5,7 @@ import {
   CheckCircle2,
   MapPinned,
   ShieldCheck,
-  Sparkles,
-  UserRound
+  Sparkles
 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
@@ -16,6 +15,7 @@ import { getMissingSupabaseMessage } from "@/lib/supabase/config";
 import { ProfileForm } from "@/components/profile/profile-form";
 import { getProfileByUserId } from "@/lib/profile/queries";
 import { ProfileSummary } from "@/components/profile/profile-summary";
+import { AvatarImage } from "@/components/ui/avatar-image";
 
 export default async function ProfilePage() {
   const supabase = await createSupabaseServerClient();
@@ -69,17 +69,12 @@ export default async function ProfilePage() {
           <section className="bg-[radial-gradient(circle_at_88%_18%,rgba(245,185,76,0.22),transparent_30%),linear-gradient(135deg,#05233f_0%,#061d36_58%,#03162a_100%)] p-6 text-white sm:p-8">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
               <div className="flex items-center gap-4">
-                <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-md bg-lagoon-100 text-night-950 ring-4 ring-white/12">
-                  {profile?.avatar_url ? (
-                    <img
-                      src={profile.avatar_url}
-                      alt={profile.username}
-                      className="h-full w-full rounded-md object-cover"
-                    />
-                  ) : (
-                    <UserRound className="h-10 w-10" />
-                  )}
-                </div>
+                <AvatarImage
+                  src={profile?.avatar_url}
+                  alt={profile?.username ?? "Profil After Check-in"}
+                  size="lg"
+                  className="ring-4 ring-white/12"
+                />
                 <div>
                   <span className="inline-flex items-center gap-2 rounded-full border border-lagoon-300/35 bg-white/8 px-3 py-1.5 text-sm font-bold text-lagoon-100">
                     <Sparkles className="h-4 w-4" />
