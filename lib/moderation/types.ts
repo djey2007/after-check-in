@@ -31,7 +31,7 @@ export type AdminReport = {
   reported_username: string;
   reason: ReportReason;
   details: string;
-  status: string;
+  status: "open" | "reviewed" | "dismissed";
   created_at: string;
 };
 

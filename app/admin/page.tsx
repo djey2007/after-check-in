@@ -6,7 +6,7 @@ import { LogoutButton } from "@/components/auth/logout-button";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getMissingSupabaseMessage } from "@/lib/supabase/config";
 import { reportReasonLabels, type AdminReport, type AdminUser } from "@/lib/moderation/types";
-import { setUserSuspendedAction } from "@/app/moderation/actions";
+import { setReportStatusAction, setUserSuspendedAction } from "@/app/moderation/actions";
 
 export default async function AdminPage() {
   const supabase = await createSupabaseServerClient();
@@ -104,6 +104,12 @@ export default async function AdminPage() {
                         {report.details}
                       </p>
                     ) : null}
+                    {report.status === "open" ? (
+                      <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                        <ReportStatusForm reportId={report.id} status="reviewed" label="Marquer traite" />
+                        <ReportStatusForm reportId={report.id} status="dismissed" label="Ignorer" secondary />
+                      </div>
+                    ) : null}
                   </article>
                 ))}
               </div>
@@ -163,5 +169,34 @@ export default async function AdminPage() {
         </div>
       </section>
     </main>
+  );
+}
+
+function ReportStatusForm({
+  reportId,
+  status,
+  label,
+  secondary = false
+}: {
+  reportId: string;
+  status: "reviewed" | "dismissed";
+  label: string;
+  secondary?: boolean;
+}) {
+  return (
+    <form action={setReportStatusAction} className="w-full sm:w-auto">
+      <input type="hidden" name="reportId" value={reportId} />
+      <input type="hidden" name="status" value={status} />
+      <button
+        type="submit"
+        className={
+          secondary
+            ? "inline-flex min-h-10 w-full items-center justify-center rounded-md border border-night-900/15 bg-white px-4 py-2 text-sm font-semibold text-night-950 transition hover:border-lagoon-500/60"
+            : "inline-flex min-h-10 w-full items-center justify-center rounded-md bg-lagoon-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-lagoon-400"
+        }
+      >
+        {label}
+      </button>
+    </form>
   );
 }

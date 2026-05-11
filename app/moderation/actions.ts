@@ -125,3 +125,25 @@ export async function setUserSuspendedAction(formData: FormData) {
 
   revalidatePath("/admin");
 }
+
+export async function setReportStatusAction(formData: FormData) {
+  const supabase = await createSupabaseServerClient();
+
+  if (!supabase) {
+    return;
+  }
+
+  const reportId = String(formData.get("reportId") ?? "");
+  const status = String(formData.get("status") ?? "");
+
+  if (!reportId || !["reviewed", "dismissed"].includes(status)) {
+    return;
+  }
+
+  await supabase.rpc("admin_set_report_status", {
+    report_id: reportId,
+    new_status: status
+  });
+
+  revalidatePath("/admin");
+}

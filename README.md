@@ -140,6 +140,13 @@ Pour activer signalements et admin minimal:
 L'espace `/admin` liste les utilisateurs et les signalements, et permet de
 suspendre ou reactiver un compte.
 
+Pour permettre a l'admin de cloturer les signalements:
+
+1. Ouvrir Supabase.
+2. Aller dans **SQL Editor**.
+3. Copier le contenu de `supabase/migrations/0008_admin_report_status.sql`.
+4. Cliquer sur **Run**.
+
 Pour activer le stockage des photos de profil:
 
 1. Ouvrir Supabase.
