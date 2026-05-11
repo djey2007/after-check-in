@@ -8,7 +8,11 @@ import {
   type Profile,
   travelTypeLabels
 } from "@/lib/profile/types";
-import { getApproxLocationCell } from "@/lib/location/cell";
+import {
+  getApproxLocationCell,
+  getApproxLocationCellBounds,
+  type ApproxLocationCellBounds
+} from "@/lib/location/cell";
 import { AuthMessage } from "@/components/auth/auth-message";
 import { SubmitButton } from "@/components/auth/submit-button";
 
@@ -19,6 +23,9 @@ type ProfileFormProps = {
 export function ProfileForm({ profile }: ProfileFormProps) {
   const [state, action] = useActionState(saveProfileAction, initialProfileFormState);
   const [locationCell, setLocationCell] = useState(profile?.location_cell ?? "");
+  const [mapBounds, setMapBounds] = useState<ApproxLocationCellBounds | null>(
+    profile?.location_cell ? getApproxLocationCellBounds(profile.location_cell) : null
+  );
   const [locationStatus, setLocationStatus] = useState(
     profile?.location_cell ? "Position approximative activée." : ""
   );
@@ -44,8 +51,9 @@ export function ProfileForm({ profile }: ProfileFormProps) {
         }
 
         setLocationCell(cell);
+        setMapBounds(getApproxLocationCellBounds(cell));
         setLocationStatus(
-          "Position approximative activée. Aucune coordonnée GPS exacte ne sera enregistrée."
+          "Position approximative trouvée. Clique sur Enregistrer le profil pour la conserver."
         );
       },
       () => {
@@ -137,6 +145,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
             {locationStatus}
           </p>
         ) : null}
+        {mapBounds ? <ApproxLocationMap bounds={mapBounds} /> : null}
       </div>
 
       <label className="grid gap-2 text-sm font-semibold text-night-950">
@@ -196,4 +205,48 @@ export function ProfileForm({ profile }: ProfileFormProps) {
       <SubmitButton pendingLabel="Enregistrement...">Enregistrer le profil</SubmitButton>
     </form>
   );
+}
+
+function ApproxLocationMap({ bounds }: { bounds: ApproxLocationCellBounds }) {
+  const paddedBounds = padBounds(bounds);
+  const mapUrl = [
+    "https://www.openstreetmap.org/export/embed.html?bbox=",
+    encodeURIComponent(
+      [
+        paddedBounds.minLongitude,
+        paddedBounds.minLatitude,
+        paddedBounds.maxLongitude,
+        paddedBounds.maxLatitude
+      ].join(",")
+    ),
+    "&layer=mapnik"
+  ].join("");
+
+  return (
+    <div className="mt-4 overflow-hidden rounded-md border border-night-900/10 bg-night-950/3">
+      <div className="relative h-56 w-full">
+        <iframe
+          title="Carte de la zone approximative"
+          src={mapUrl}
+          className="h-full w-full"
+          loading="lazy"
+          referrerPolicy="no-referrer"
+        />
+        <div className="pointer-events-none absolute inset-x-4 bottom-4 rounded-md bg-white/92 px-3 py-2 text-sm font-semibold leading-6 text-night-950 shadow-lg">
+          Zone approximative affichée. Le point GPS exact n&apos;est ni affiché ni stocké.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function padBounds(bounds: ApproxLocationCellBounds) {
+  const padding = 0.02;
+
+  return {
+    minLatitude: Math.max(-90, bounds.minLatitude - padding),
+    minLongitude: Math.max(-180, bounds.minLongitude - padding),
+    maxLatitude: Math.min(90, bounds.maxLatitude + padding),
+    maxLongitude: Math.min(180, bounds.maxLongitude + padding)
+  };
 }
