@@ -1,4 +1,4 @@
-import { Clock3, MapPinned, MessageCircle, UserRound } from "lucide-react";
+import { Clock3, MapPinned, MessageCircle, Settings, UserRound } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { LogoutButton } from "@/components/auth/logout-button";
@@ -93,6 +93,10 @@ export default async function DashboardPage() {
           </ButtonLink>
           <ButtonLink href="/admin" variant="secondary">
             Admin
+          </ButtonLink>
+          <ButtonLink href="/settings" variant="secondary">
+            <Settings className="h-4 w-4" />
+            Parametres
           </ButtonLink>
           <ButtonLink href="/" variant="secondary">
             Retour accueil

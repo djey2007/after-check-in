@@ -9,7 +9,8 @@ const protectedRoutes = [
   "/discover",
   "/requests",
   "/chat",
-  "/admin"
+  "/admin",
+  "/settings"
 ];
 
 export async function updateSession(request: NextRequest) {

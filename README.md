@@ -149,6 +149,12 @@ Pour activer le stockage des photos de profil:
 
 Le bucket `profile-photos` accepte JPG, PNG et WebP jusqu'a 2 Mo.
 
+## Suppression de compte
+
+La page `/settings` permet une suppression douce du compte: le profil est marque
+comme supprime, la visibilite active est arretee, puis l'utilisateur est
+deconnecte. Les profils supprimes sont exclus de la decouverte.
+
 ## Documents projet
 
 - [Product brief](docs/product-brief.md)
