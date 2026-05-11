@@ -16,8 +16,8 @@ export const initialModerationFormState: ModerationFormState = {
 };
 
 export const reportReasonLabels: Record<ReportReason, string> = {
-  inappropriate_behavior: "Comportement inapproprie",
-  harassment: "Harcelement",
+  inappropriate_behavior: "Comportement inapproprié",
+  harassment: "Harcèlement",
   fake_profile: "Faux profil",
   offensive_content: "Contenu offensant",
   other: "Autre"

@@ -7,13 +7,13 @@ export function DeleteAccountForm() {
       <Trash2 className="h-6 w-6 text-red-700" />
       <h2 className="mt-4 text-xl font-bold tracking-normal">Supprimer le compte</h2>
       <p className="mt-2 text-sm leading-6 text-night-900/72">
-        Cette action desactive ton profil, coupe ta visibilite et te deconnecte.
-        Ton profil ne sera plus visible dans la decouverte.
+        Cette action désactive ton profil, coupe ta visibilité et te déconnecte.
+        Ton profil ne sera plus visible dans la découverte.
       </p>
 
       <form action={deleteAccountAction} className="mt-4 grid gap-3">
         <label className="grid gap-2 text-sm font-semibold">
-          Ecris SUPPRIMER pour confirmer
+          Écris SUPPRIMER pour confirmer
           <input
             name="confirmation"
             className="min-h-11 rounded-md border border-red-200 bg-white px-4 text-base font-normal outline-none transition focus:border-red-400 focus:ring-4 focus:ring-red-200"

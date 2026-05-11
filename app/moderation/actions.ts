@@ -67,7 +67,7 @@ export async function reportUserAction(
     } = await supabase.auth.getUser();
 
     if (!user) {
-      return { status: "error", message: "Tu dois etre connecte." };
+      return { status: "error", message: "Tu dois être connecté." };
     }
 
     const reportedId = String(formData.get("reportedId") ?? "");
@@ -75,7 +75,7 @@ export async function reportUserAction(
     const details = String(formData.get("details") ?? "").trim();
 
     if (!reportedId || reportedId === user.id) {
-      return { status: "error", message: "Profil signale invalide." };
+      return { status: "error", message: "Profil signalé invalide." };
     }
 
     if (!allowedReasons.has(reason)) {
@@ -83,7 +83,7 @@ export async function reportUserAction(
     }
 
     if (details.length > 500) {
-      return { status: "error", message: "Le detail doit faire 500 caracteres maximum." };
+      return { status: "error", message: "Le détail doit faire 500 caractères maximum." };
     }
 
     const { error } = await supabase.from("reports").insert({
@@ -98,7 +98,7 @@ export async function reportUserAction(
     }
 
     revalidatePath("/admin");
-    return { status: "success", message: "Signalement envoye a la moderation." };
+    return { status: "success", message: "Signalement envoyé à la modération." };
   } catch (error) {
     return { status: "error", message: getErrorMessage(error) };
   }

@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { ArrowLeft, ShieldCheck, UsersRound } from "lucide-react";
+import { ArrowLeft, Flag, ShieldCheck, UserCog, UsersRound } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { LogoutButton } from "@/components/auth/logout-button";
@@ -17,7 +17,7 @@ export default async function AdminPage() {
         <section className="w-full max-w-xl rounded-md border border-night-900/10 bg-white p-6 shadow-xl shadow-night-950/8">
           <Logo />
           <h1 className="mt-8 text-3xl font-bold tracking-normal text-night-950">
-            Supabase a configurer
+            Supabase à configurer
           </h1>
           <p className="mt-3 leading-7 text-night-900/72">{getMissingSupabaseMessage()}</p>
           <ButtonLink href="/" variant="secondary" className="mt-8">
@@ -62,14 +62,24 @@ export default async function AdminPage() {
           Tableau de bord
         </ButtonLink>
 
-        <div className="rounded-md bg-night-950 p-6 text-white shadow-glow">
-          <p className="text-sm font-semibold text-lagoon-100/80">Moderation</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-normal sm:text-4xl">
-            Admin After Check-in
-          </h1>
-          <p className="mt-4 max-w-2xl leading-7 text-white/72">
-            Espace minimal pour suivre les signalements et suspendre un compte.
-          </p>
+        <div className="overflow-hidden rounded-md border border-night-900/10 bg-white shadow-xl shadow-night-950/8">
+          <section className="bg-[radial-gradient(circle_at_88%_18%,rgba(245,185,76,0.22),transparent_30%),linear-gradient(135deg,#05233f_0%,#061d36_58%,#03162a_100%)] p-6 text-white sm:p-8">
+            <span className="inline-flex items-center gap-2 rounded-full border border-lagoon-300/35 bg-white/8 px-3 py-1.5 text-sm font-bold text-lagoon-100">
+              <UserCog className="h-4 w-4" />
+              Modération
+            </span>
+            <h1 className="mt-5 text-3xl font-bold tracking-normal sm:text-4xl">
+              Admin After Check-in
+            </h1>
+            <p className="mt-4 max-w-2xl leading-7 text-white/72">
+              Espace minimal pour suivre les signalements, examiner les profils et
+              suspendre un compte si nécessaire.
+            </p>
+            <div className="mt-5 grid gap-3 text-sm font-semibold sm:grid-cols-2">
+              <AdminStat icon={Flag} label={`${reports.length} signalement${reports.length > 1 ? "s" : ""}`} />
+              <AdminStat icon={UsersRound} label={`${users.length} utilisateur${users.length > 1 ? "s" : ""}`} />
+            </div>
+          </section>
         </div>
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
@@ -89,7 +99,7 @@ export default async function AdminPage() {
                           {report.reported_username}
                         </h3>
                         <p className="mt-1 text-sm text-night-900/62">
-                          Signale par {report.reporter_username}
+                          Signalé par {report.reporter_username}
                         </p>
                       </div>
                       <span className="rounded-md bg-gold-400/20 px-3 py-1 text-xs font-bold uppercase tracking-wide text-night-950">
@@ -106,7 +116,7 @@ export default async function AdminPage() {
                     ) : null}
                     {report.status === "open" ? (
                       <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-                        <ReportStatusForm reportId={report.id} status="reviewed" label="Marquer traite" />
+                        <ReportStatusForm reportId={report.id} status="reviewed" label="Marquer traité" />
                         <ReportStatusForm reportId={report.id} status="dismissed" label="Ignorer" secondary />
                       </div>
                     ) : null}
@@ -153,7 +163,7 @@ export default async function AdminPage() {
                           type="submit"
                           className="inline-flex min-h-10 w-full items-center justify-center rounded-md border border-night-900/15 bg-white px-4 py-2 text-sm font-semibold text-night-950 transition hover:border-lagoon-500/60"
                         >
-                          {profile.is_suspended ? "Reactiver" : "Suspendre"}
+                          {profile.is_suspended ? "Réactiver" : "Suspendre"}
                         </button>
                       </form>
                     ) : null}
@@ -162,13 +172,22 @@ export default async function AdminPage() {
               </div>
             ) : (
               <p className="mt-5 rounded-md bg-night-950/5 p-4 text-sm text-night-900/68">
-                Aucun utilisateur trouve.
+                Aucun utilisateur trouvé.
               </p>
             )}
           </section>
         </div>
       </section>
     </main>
+  );
+}
+
+function AdminStat({ icon: Icon, label }: { icon: typeof Flag; label: string }) {
+  return (
+    <span className="inline-flex items-center gap-2 rounded-md border border-white/12 bg-white/8 px-3 py-2 text-lagoon-100">
+      <Icon className="h-4 w-4" />
+      {label}
+    </span>
   );
 }
 
