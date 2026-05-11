@@ -177,6 +177,9 @@ Pour afficher et gerer les utilisateurs bloques dans `/settings`:
 - [Data model](docs/data-model.md)
 - [Security & privacy](docs/security-privacy.md)
 - [Technical architecture](docs/technical-architecture.md)
+- [QA checklist](docs/qa-checklist.md)
+- [Beta test plan](docs/beta-test-plan.md)
+- [Supabase email setup](docs/supabase-email-setup.md)
 
 ## Plan de developpement par etapes
 
