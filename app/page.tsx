@@ -74,18 +74,18 @@ export default function Home() {
     <main className="min-h-screen overflow-hidden">
       <PublicHeader />
 
-      <section className="relative mx-auto grid w-full max-w-6xl items-center gap-10 px-4 pb-16 pt-8 sm:px-6 lg:grid-cols-[1.02fr_0.98fr] lg:px-8 lg:pb-24 lg:pt-14">
+      <section className="relative mx-auto grid w-full max-w-7xl items-center gap-10 px-4 pb-12 pt-8 sm:px-6 lg:grid-cols-[0.96fr_1.04fr] lg:px-8 lg:pb-16 lg:pt-10">
         <div className="relative z-10">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-lagoon-500/20 bg-white/85 px-3 py-1 text-sm font-semibold text-night-900 shadow-sm backdrop-blur">
             <ShieldCheck className="h-4 w-4 text-lagoon-500" />
             Social, temporaire, sans localisation précise
           </div>
 
-          <h1 className="max-w-3xl text-5xl font-bold leading-tight tracking-normal text-night-950 sm:text-6xl lg:text-7xl">
+          <h1 className="max-w-3xl text-5xl font-bold leading-[1.05] tracking-normal text-night-950 sm:text-6xl">
             Le lobby social des voyageurs solos.
           </h1>
 
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-night-900/76 sm:text-xl">
+          <p className="mt-5 max-w-xl text-base leading-7 text-night-900/78 sm:text-lg">
             After Check-in transforme les soirées d’hôtel en moments simples et
             conviviaux : dîner, boire un verre, networker ou sortir avec des
             personnes proches, disponibles et consentantes.
@@ -101,9 +101,12 @@ export default function Home() {
             </ButtonLink>
           </div>
 
-          <p className="mt-4 max-w-xl text-sm font-semibold leading-6 text-night-900/64">
+          <p className="mt-4 flex max-w-xl gap-2 text-sm font-semibold leading-6 text-night-900/64">
+            <LockKeyhole className="mt-0.5 h-4 w-4 shrink-0 text-lagoon-500" />
+            <span>
             Visible uniquement quand tu le décides. Jamais de numéro de chambre.
             Jamais de localisation précise.
+            </span>
           </p>
 
           <div className="mt-8 grid gap-3 text-sm font-semibold text-night-900/72 sm:grid-cols-3">
@@ -118,7 +121,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:px-8">
         <SectionIntro
           eyebrow="Pensé pour les voyageurs en déplacement"
           title="Une présence sociale utile, seulement quand elle a du sens."
@@ -131,22 +134,22 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-y border-night-900/10 bg-white/72 py-12 backdrop-blur">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <section className="border-y border-night-900/10 bg-white/72 py-8 backdrop-blur">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionIntro
             eyebrow="Comment ça marche"
             title="Un parcours court, clair et rassurant."
             text="Le MVP va droit au but : disponibilité temporaire, intention visible, demande acceptée, puis chat texte."
           />
-          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:items-stretch">
             {steps.map((step, index) => (
-              <StepCard key={step.title} index={index + 1} {...step} />
+              <StepCard key={step.title} index={index + 1} isLast={index === steps.length - 1} {...step} />
             ))}
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <SectionIntro
           eyebrow="Sécurité intégrée"
           title="Pensé pour inspirer confiance, pas pour exposer."
@@ -171,20 +174,27 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 pb-12 sm:px-6 lg:px-8">
-        <div className="overflow-hidden rounded-md bg-night-950 p-6 text-white shadow-2xl shadow-night-950/18 sm:p-8 lg:p-10">
-          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+      <section className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
+        <div className="overflow-hidden rounded-md bg-night-950 p-6 text-white shadow-2xl shadow-night-950/18 sm:p-8 lg:p-9">
+          <div className="grid gap-7 lg:grid-cols-[auto_1fr_auto] lg:items-center">
+            <div className="flex h-20 w-20 items-center justify-center rounded-md bg-lagoon-500/15 text-lagoon-400 shadow-glow">
+              <Coffee className="h-9 w-9" />
+            </div>
             <div>
               <p className="text-sm font-bold uppercase tracking-wide text-lagoon-100/80">
                 Prêt après le check-in ?
               </p>
-              <h2 className="mt-3 max-w-2xl text-3xl font-bold tracking-normal sm:text-4xl">
-                Active ta disponibilité quand tu veux rencontrer du monde, puis redeviens invisible.
+              <h2 className="mt-3 max-w-2xl text-2xl font-bold tracking-normal sm:text-3xl">
+                Prêt à transformer vos soirées d’hôtel ?
               </h2>
+              <p className="mt-2 text-white/72">
+                Rejoignez After Check-in et faites de chaque halte une belle rencontre possible.
+              </p>
             </div>
-            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <ButtonLink href="/signup" className="bg-white text-night-950 hover:bg-lagoon-100">
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <ButtonLink href="/signup" className="bg-gold-400 text-night-950 hover:bg-gold-300">
                 Créer un compte
+                <ArrowRight className="h-4 w-4" />
               </ButtonLink>
               <ButtonLink href="/login" variant="secondary" className="border-white/20 bg-white/8 text-white hover:bg-white hover:text-night-950">
                 Se connecter
@@ -195,13 +205,16 @@ export default function Home() {
       </section>
 
       <footer className="border-t border-night-900/10 bg-white/78">
-        <div className="mx-auto flex max-w-6xl flex-col gap-5 px-4 py-7 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-7 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <Logo compact />
           <nav className="flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold text-night-900/68">
             <a href="mailto:contact@after-check-in.app">Contact</a>
             <a href="#confidentialite">Confidentialité</a>
             <a href="#conditions">Conditions</a>
           </nav>
+          <p className="text-sm font-semibold text-night-900/54">
+            © 2026 After Check-in. Tous droits réservés.
+          </p>
         </div>
       </footer>
     </main>
@@ -210,8 +223,8 @@ export default function Home() {
 
 function ProductMockup() {
   return (
-    <div className="premium-surface rounded-md p-3">
-      <div className="rounded-md bg-night-950 p-5 text-white shadow-2xl shadow-night-950/18">
+    <div className="premium-surface relative rounded-md p-3 shadow-2xl shadow-night-950/16">
+      <div className="rounded-md bg-night-950 p-5 text-white shadow-2xl shadow-night-950/18 ring-1 ring-white/10">
         <div className="flex items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-sm text-lagoon-100/80">
@@ -232,7 +245,7 @@ function ProductMockup() {
             return (
               <div
                 key={intent.label}
-                className="flex min-h-24 flex-col justify-between rounded-md border border-white/10 bg-white/9 p-4 shadow-inner"
+                className={intent.label === "Rencontre" ? "col-span-2 flex min-h-16 items-center gap-4 rounded-md border border-white/10 bg-white/9 p-4 shadow-inner" : "flex min-h-16 items-center gap-4 rounded-md border border-white/10 bg-white/9 p-4 shadow-inner"}
               >
                 <Icon className="h-5 w-5 text-lagoon-400" />
                 <span className="text-sm font-semibold">{intent.label}</span>
@@ -299,12 +312,14 @@ function AudienceCard({
   text: string;
 }) {
   return (
-    <article className="rounded-md border border-night-900/10 bg-white/84 p-5 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-night-950/8">
-      <div className="flex h-10 w-10 items-center justify-center rounded-md bg-night-950 text-white">
+    <article className="flex gap-4 rounded-md border border-night-900/10 bg-white/86 p-5 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-night-950/8">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-lagoon-100 text-lagoon-500">
         <Icon className="h-5 w-5" />
       </div>
-      <h3 className="mt-5 font-bold tracking-normal text-night-950">{title}</h3>
-      <p className="mt-2 text-sm leading-6 text-night-900/68">{text}</p>
+      <div>
+        <h3 className="font-bold tracking-normal text-night-950">{title}</h3>
+        <p className="mt-2 text-sm leading-6 text-night-900/68">{text}</p>
+      </div>
     </article>
   );
 }
@@ -312,19 +327,26 @@ function AudienceCard({
 function StepCard({
   index,
   title,
-  text
+  text,
+  isLast
 }: {
   index: number;
   title: string;
   text: string;
+  isLast: boolean;
 }) {
   return (
-    <article className="rounded-md border border-night-900/10 bg-white p-5 shadow-sm">
-      <span className="flex h-10 w-10 items-center justify-center rounded-md bg-night-950 text-sm font-bold text-white">
+    <article className="relative flex gap-4 rounded-md bg-transparent p-2">
+      {!isLast ? (
+        <div className="absolute left-14 top-7 hidden h-px w-[calc(100%-3.5rem)] border-t border-dashed border-lagoon-500/45 lg:block" />
+      ) : null}
+      <span className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-lagoon-500 text-sm font-bold text-white shadow-glow">
         {index}
       </span>
-      <h3 className="mt-5 font-bold tracking-normal text-night-950">{title}</h3>
-      <p className="mt-2 text-sm leading-6 text-night-900/68">{text}</p>
+      <div>
+        <h3 className="font-bold tracking-normal text-night-950">{title}</h3>
+        <p className="mt-1 text-sm leading-6 text-night-900/68">{text}</p>
+      </div>
     </article>
   );
 }
@@ -341,11 +363,12 @@ function ProfilePreview({
   time: string;
 }) {
   return (
-    <article className="rounded-md border border-night-900/10 bg-white/90 p-4 shadow-sm backdrop-blur">
+    <article className="rounded-md border border-night-900/10 bg-white p-4 shadow-lg shadow-night-950/8 backdrop-blur">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-md bg-night-950 text-sm font-bold text-white">
+          <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-lagoon-100 text-sm font-bold text-night-950">
             {name.slice(0, 1)}
+            <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-lagoon-500" />
           </div>
           <div>
             <h3 className="font-bold text-night-950">{name}</h3>

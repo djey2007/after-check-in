@@ -22,7 +22,7 @@ export function Logo({ className, compact = false, size = "default" }: LogoProps
         className={cn(
           "h-auto rounded-md object-contain",
           isLarge
-            ? "w-36 sm:w-48 lg:w-56"
+            ? "w-36 sm:w-44 lg:w-48"
             : compact
               ? "w-28 sm:w-36"
               : "w-40 sm:w-52"
