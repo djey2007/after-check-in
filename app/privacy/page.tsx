@@ -1,11 +1,12 @@
 import { ArrowLeft, EyeOff, LockKeyhole, ShieldCheck } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
+import { approximateLocationRadiusKm } from "@/lib/location/cell";
 
 const privacyItems = [
   {
     title: "Localisation approximative",
-    text: "After Check-in utilise une zone large ou une ville saisie par l’utilisateur. L’application ne doit pas afficher de position GPS précise, de distance exacte ou de numéro de chambre.",
+    text: `After Check-in utilise une zone large ou une ville saisie par l’utilisateur. Quand le GPS approximatif est activé, la recherche repose sur une zone d’environ ${approximateLocationRadiusKm} km, sans afficher de position précise, de distance exacte ou de numéro de chambre.`,
     icon: EyeOff
   },
   {

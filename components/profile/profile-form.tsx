@@ -9,6 +9,7 @@ import {
   travelTypeLabels
 } from "@/lib/profile/types";
 import {
+  approximateLocationRadiusKm,
   getApproxLocationCell,
   getApproxLocationCellBounds,
   type ApproxLocationCellBounds
@@ -113,6 +114,9 @@ export function ProfileForm({ profile }: ProfileFormProps) {
 
       <label className="grid gap-2 text-sm font-semibold text-night-950">
         Zone approximative
+        <span className="text-xs font-semibold leading-5 text-night-900/58">
+          Ce texte est affiché aux autres utilisateurs. Exemple : ville, quartier ou zone large.
+        </span>
         <input
           name="approx_area"
           required
@@ -128,8 +132,9 @@ export function ProfileForm({ profile }: ProfileFormProps) {
           <div>
             <p className="text-sm font-bold text-night-950">Position approximative</p>
             <p className="mt-1 text-sm leading-6 text-night-900/68">
-              Optionnel: utilise le GPS pour calculer une zone large, sans stocker
-              tes coordonnées exactes.
+              Optionnel : le GPS sert à trouver les personnes dans la même zone,
+              avec un rayon d&apos;environ {approximateLocationRadiusKm} km. Le nom
+              de zone ci-dessus reste l&apos;information lisible affichée aux autres.
             </p>
           </div>
           <button
@@ -233,7 +238,8 @@ function ApproxLocationMap({ bounds }: { bounds: ApproxLocationCellBounds }) {
           referrerPolicy="no-referrer"
         />
         <div className="pointer-events-none absolute inset-x-4 bottom-4 rounded-md bg-white/92 px-3 py-2 text-sm font-semibold leading-6 text-night-950 shadow-lg">
-          Zone approximative affichée. Le point GPS exact n&apos;est ni affiché ni stocké.
+          Zone approximative affichée : rayon d&apos;environ {approximateLocationRadiusKm} km.
+          Le point GPS exact n&apos;est ni affiché ni stocké.
         </div>
       </div>
     </div>

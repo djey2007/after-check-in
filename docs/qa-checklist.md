@@ -48,6 +48,7 @@ Cette checklist sert à valider After Check-in avant un test public limité.
 - Renseigner deux profils dans la même zone texte et vérifier qu’ils se voient.
 - Renseigner deux profils dans des zones différentes et vérifier qu’ils ne se voient pas.
 - Tester le bouton de position approximative si le navigateur autorise la géolocalisation.
+- Vérifier que l’interface explique clairement le rayon approximatif d’environ 3 km.
 - Vérifier qu’aucune distance exacte ni position GPS précise n’est affichée.
 
 ## Découverte

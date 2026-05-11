@@ -7,6 +7,7 @@
 - Aucune localisation precise.
 - Aucun numero de chambre.
 - Aucune distance exacte.
+- Quand la position approximative est activee, l'interface annonce un rayon d'environ 3 km. Il ne s'agit pas d'une position exacte.
 - Chat uniquement apres acceptation d'une demande de contact.
 - Blocage et signalement disponibles des le MVP.
 - Les rencontres doivent etre recommandees dans des lieux publics: lobby, bar, restaurant.
@@ -163,4 +164,3 @@ Afficher des rappels discrets:
 - "Ne partagez pas votre numero de chambre."
 - "Gardez votre localisation approximative."
 - "Vous controlez votre visibilite."
-

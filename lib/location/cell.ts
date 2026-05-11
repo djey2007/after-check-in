@@ -1,4 +1,5 @@
 const cellSizeDegrees = 0.05;
+export const approximateLocationRadiusKm = 3;
 
 export type ApproxLocationCellBounds = {
   minLatitude: number;
