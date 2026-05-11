@@ -91,9 +91,11 @@ export default async function DashboardPage() {
           <ButtonLink href="/requests" variant="secondary">
             Demandes
           </ButtonLink>
-          <ButtonLink href="/admin" variant="secondary">
-            Admin
-          </ButtonLink>
+          {profile?.is_admin ? (
+            <ButtonLink href="/admin" variant="secondary">
+              Admin
+            </ButtonLink>
+          ) : null}
           <ButtonLink href="/settings" variant="secondary">
             <Settings className="h-4 w-4" />
             Parametres

@@ -12,6 +12,7 @@ export type Profile = {
   approx_area: string;
   location_cell: string | null;
   is_adult_confirmed: boolean;
+  is_admin: boolean;
 };
 
 export type ProfileFormState = {

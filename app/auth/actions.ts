@@ -23,6 +23,14 @@ function isNextRedirect(error: unknown) {
   );
 }
 
+function getSafeRedirectPath(value: string) {
+  if (!value.startsWith("/") || value.startsWith("//")) {
+    return "/dashboard";
+  }
+
+  return value;
+}
+
 export async function signUpAction(
   _previousState: AuthFormState,
   formData: FormData
@@ -110,7 +118,7 @@ export async function loginAction(
       return { status: "error", message: error.message };
     }
 
-    redirect(redirectTo === "/dashboard" ? "/dashboard" : "/dashboard");
+    redirect(getSafeRedirectPath(redirectTo) as never);
   } catch (error) {
     if (isNextRedirect(error)) {
       throw error;
