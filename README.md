@@ -162,6 +162,13 @@ La page `/settings` permet une suppression douce du compte: le profil est marque
 comme supprime, la visibilite active est arretee, puis l'utilisateur est
 deconnecte. Les profils supprimes sont exclus de la decouverte.
 
+Pour afficher et gerer les utilisateurs bloques dans `/settings`:
+
+1. Ouvrir Supabase.
+2. Aller dans **SQL Editor**.
+3. Copier le contenu de `supabase/migrations/0009_blocked_users_settings.sql`.
+4. Cliquer sur **Run**.
+
 ## Documents projet
 
 - [Product brief](docs/product-brief.md)

@@ -6,6 +6,8 @@ import { LogoutButton } from "@/components/auth/logout-button";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getMissingSupabaseMessage } from "@/lib/supabase/config";
 import { DeleteAccountForm } from "@/components/settings/delete-account-form";
+import { BlockedUsersList } from "@/components/settings/blocked-users-list";
+import type { BlockedUser } from "@/lib/settings/types";
 
 export default async function SettingsPage() {
   const supabase = await createSupabaseServerClient();
@@ -34,6 +36,11 @@ export default async function SettingsPage() {
   if (!user) {
     redirect("/login?redirectTo=/settings");
   }
+
+  const { data: blockedUsersData } = await supabase
+    .rpc("get_my_blocked_users")
+    .returns<BlockedUser[]>();
+  const blockedUsers = Array.isArray(blockedUsersData) ? blockedUsersData : [];
 
   return (
     <main className="min-h-screen">
@@ -68,6 +75,10 @@ export default async function SettingsPage() {
             position GPS precise. La visibilite peut etre coupee a tout moment.
           </p>
         </section>
+
+        <div className="mt-6">
+          <BlockedUsersList blockedUsers={blockedUsers} />
+        </div>
 
         <div className="mt-6">
           <DeleteAccountForm />

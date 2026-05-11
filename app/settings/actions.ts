@@ -1,7 +1,39 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+
+export async function unblockUserAction(formData: FormData) {
+  const supabase = await createSupabaseServerClient();
+
+  if (!supabase) {
+    return;
+  }
+
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return;
+  }
+
+  const blockedId = String(formData.get("blockedId") ?? "");
+
+  if (!blockedId) {
+    return;
+  }
+
+  await supabase
+    .from("blocks")
+    .delete()
+    .eq("blocker_id", user.id)
+    .eq("blocked_id", blockedId);
+
+  revalidatePath("/settings");
+  revalidatePath("/discover");
+}
 
 export async function deleteAccountAction(formData: FormData) {
   const supabase = await createSupabaseServerClient();
