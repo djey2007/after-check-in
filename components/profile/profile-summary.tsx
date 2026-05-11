@@ -11,7 +11,15 @@ export function ProfileSummary({ profile }: ProfileSummaryProps) {
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="flex h-14 w-14 items-center justify-center rounded-md bg-lagoon-100 text-night-950">
-            <UserRound className="h-7 w-7" />
+            {profile.avatar_url ? (
+              <img
+                src={profile.avatar_url}
+                alt={profile.username}
+                className="h-full w-full rounded-md object-cover"
+              />
+            ) : (
+              <UserRound className="h-7 w-7" />
+            )}
           </div>
           <div>
             <h2 className="text-2xl font-bold tracking-normal text-night-950">
@@ -62,4 +70,3 @@ function SummaryItem({
     </div>
   );
 }
-

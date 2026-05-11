@@ -17,6 +17,22 @@ function looksLikeRoomNumber(value: string) {
   return /\b(chambre|room|suite)\s*[a-z-]*\s*\d{1,5}\b/i.test(value);
 }
 
+function getAvatarExtension(type: string) {
+  if (type === "image/jpeg") {
+    return "jpg";
+  }
+
+  if (type === "image/png") {
+    return "png";
+  }
+
+  if (type === "image/webp") {
+    return "webp";
+  }
+
+  return null;
+}
+
 function getErrorMessage(error: unknown) {
   if (error instanceof Error) {
     return error.message;
@@ -58,6 +74,7 @@ export async function saveProfileAction(
     const travelType = String(formData.get("travel_type") ?? "business") as TravelType;
     const languages = splitList(formData.get("languages"));
     const interests = splitList(formData.get("interests"));
+    const avatar = formData.get("avatar");
 
     if (username.length < 2 || username.length > 32) {
       return { status: "error", message: "Le pseudo doit contenir entre 2 et 32 caracteres." };
@@ -90,10 +107,46 @@ export async function saveProfileAction(
       return { status: "error", message: "Type de deplacement invalide." };
     }
 
+    const { data: existingProfile } = await supabase
+      .from("profiles")
+      .select("avatar_url")
+      .eq("id", user.id)
+      .maybeSingle();
+    let avatarUrl = existingProfile?.avatar_url ?? null;
+
+    if (avatar instanceof File && avatar.size > 0) {
+      const extension = getAvatarExtension(avatar.type);
+
+      if (!extension) {
+        return { status: "error", message: "La photo doit etre en JPG, PNG ou WebP." };
+      }
+
+      if (avatar.size > 2 * 1024 * 1024) {
+        return { status: "error", message: "La photo doit faire 2 Mo maximum." };
+      }
+
+      const path = `${user.id}/avatar-${Date.now()}.${extension}`;
+      const { error: uploadError } = await supabase.storage
+        .from("profile-photos")
+        .upload(path, avatar, {
+          cacheControl: "3600",
+          contentType: avatar.type,
+          upsert: true
+        });
+
+      if (uploadError) {
+        return { status: "error", message: uploadError.message };
+      }
+
+      const { data: publicUrl } = supabase.storage.from("profile-photos").getPublicUrl(path);
+      avatarUrl = publicUrl.publicUrl;
+    }
+
     const { error } = await supabase.from("profiles").upsert({
       id: user.id,
       username,
       age,
+      avatar_url: avatarUrl,
       bio,
       languages,
       interests,

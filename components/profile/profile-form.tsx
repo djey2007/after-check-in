@@ -91,6 +91,19 @@ export function ProfileForm({ profile }: ProfileFormProps) {
       </div>
 
       <label className="grid gap-2 text-sm font-semibold text-night-950">
+        Photo de profil
+        <input
+          name="avatar"
+          type="file"
+          accept="image/png,image/jpeg,image/webp"
+          className="min-h-12 rounded-md border border-night-900/12 bg-white px-4 py-3 text-sm font-normal file:mr-4 file:rounded-md file:border-0 file:bg-lagoon-100 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-night-950"
+        />
+        <span className="text-xs font-semibold leading-5 text-night-900/58">
+          JPG, PNG ou WebP. 2 Mo maximum.
+        </span>
+      </label>
+
+      <label className="grid gap-2 text-sm font-semibold text-night-950">
         Zone approximative
         <input
           name="approx_area"

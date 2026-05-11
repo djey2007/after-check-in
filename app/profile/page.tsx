@@ -60,7 +60,15 @@ export default async function ProfilePage() {
         <div className="grid gap-6 lg:grid-cols-[0.78fr_1.22fr]">
           <aside className="rounded-md border border-night-900/10 bg-white p-6 shadow-sm">
             <div className="flex h-24 w-24 items-center justify-center rounded-md bg-lagoon-100 text-night-950">
-              <UserRound className="h-10 w-10" />
+              {profile?.avatar_url ? (
+                <img
+                  src={profile.avatar_url}
+                  alt={profile.username}
+                  className="h-full w-full rounded-md object-cover"
+                />
+              ) : (
+                <UserRound className="h-10 w-10" />
+              )}
             </div>
             <h1 className="mt-6 text-3xl font-bold tracking-normal text-night-950">
               Ton profil

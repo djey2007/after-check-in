@@ -140,6 +140,15 @@ Pour activer signalements et admin minimal:
 L'espace `/admin` liste les utilisateurs et les signalements, et permet de
 suspendre ou reactiver un compte.
 
+Pour activer le stockage des photos de profil:
+
+1. Ouvrir Supabase.
+2. Aller dans **SQL Editor**.
+3. Copier le contenu de `supabase/migrations/0007_profile_photos_storage.sql`.
+4. Cliquer sur **Run**.
+
+Le bucket `profile-photos` accepte JPG, PNG et WebP jusqu'a 2 Mo.
+
 ## Documents projet
 
 - [Product brief](docs/product-brief.md)
