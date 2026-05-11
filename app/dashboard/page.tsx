@@ -91,6 +91,9 @@ export default async function DashboardPage() {
           <ButtonLink href="/requests" variant="secondary">
             Demandes
           </ButtonLink>
+          <ButtonLink href="/admin" variant="secondary">
+            Admin
+          </ButtonLink>
           <ButtonLink href="/" variant="secondary">
             Retour accueil
           </ButtonLink>

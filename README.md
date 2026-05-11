@@ -123,6 +123,23 @@ La position GPS exacte n'est jamais stockee. Le navigateur calcule une cellule
 approximative et la decouverte utilise cette cellule quand elle existe, avec un
 repli sur la zone texte.
 
+Pour activer signalements et admin minimal:
+
+1. Ouvrir Supabase.
+2. Aller dans **SQL Editor**.
+3. Copier le contenu de `supabase/migrations/0006_reports_admin.sql`.
+4. Cliquer sur **Run**.
+5. Promouvoir manuellement le premier admin dans Supabase:
+
+   ```sql
+   update public.profiles
+   set is_admin = true
+   where id = 'USER_ID_A_PROMOUVOIR';
+   ```
+
+L'espace `/admin` liste les utilisateurs et les signalements, et permet de
+suspendre ou reactiver un compte.
+
 ## Documents projet
 
 - [Product brief](docs/product-brief.md)

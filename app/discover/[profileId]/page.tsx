@@ -8,6 +8,7 @@ import { getMissingSupabaseMessage } from "@/lib/supabase/config";
 import { getDiscoverableProfiles } from "@/lib/discovery/queries";
 import { getProfileByUserId } from "@/lib/profile/queries";
 import { ContactRequestForm } from "@/components/contact/contact-request-form";
+import { ModerationPanel } from "@/components/moderation/moderation-panel";
 
 export default async function DiscoverProfilePage({
   params
@@ -123,6 +124,8 @@ export default async function DiscoverProfilePage({
                 <ContactRequestForm receiverId={targetProfile.id} />
               </div>
             </div>
+
+            <ModerationPanel targetUserId={targetProfile.id} />
           </section>
         </div>
       </section>
