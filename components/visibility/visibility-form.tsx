@@ -55,12 +55,12 @@ export function VisibilityForm({ currentSession, defaultIntent = "dinner" }: Vis
       </div>
 
       <div className="rounded-md bg-lagoon-100 px-4 py-3 text-sm font-semibold leading-6 text-night-950">
-        La visibilite expire automatiquement. Pas de GPS, pas de distance exacte, pas de
-        numero de chambre.
+        La visibilité expire automatiquement. Pas de GPS, pas de distance exacte, pas de
+        numéro de chambre.
       </div>
 
       <AuthMessage status={state.status} message={state.message} />
-      <SubmitButton pendingLabel="Activation...">Activer la visibilite</SubmitButton>
+      <SubmitButton pendingLabel="Activation...">Activer la visibilité</SubmitButton>
     </form>
   );
 }

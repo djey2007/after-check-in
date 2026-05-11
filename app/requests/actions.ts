@@ -39,7 +39,7 @@ export async function sendContactRequestAction(
     } = await supabase.auth.getUser();
 
     if (!user) {
-      return { status: "error", message: "Tu dois etre connecte." };
+      return { status: "error", message: "Tu dois être connecté." };
     }
 
     const receiverId = String(formData.get("receiverId") ?? "");
@@ -50,7 +50,7 @@ export async function sendContactRequestAction(
     }
 
     if (message.length > 240) {
-      return { status: "error", message: "Le message doit faire 240 caracteres maximum." };
+      return { status: "error", message: "Le message doit faire 240 caractères maximum." };
     }
 
     const { error } = await supabase.from("contact_requests").insert({
@@ -67,7 +67,7 @@ export async function sendContactRequestAction(
     revalidatePath("/requests");
     revalidatePath(`/discover/${receiverId}`);
 
-    return { status: "success", message: "Demande envoyee." };
+    return { status: "success", message: "Demande envoyée." };
   } catch (error) {
     return { status: "error", message: getErrorMessage(error) };
   }

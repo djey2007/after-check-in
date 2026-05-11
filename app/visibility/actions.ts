@@ -18,7 +18,7 @@ function getErrorMessage(error: unknown) {
     return error.message;
   }
 
-  return "Une erreur inattendue est survenue pendant l'activation de la visibilite.";
+  return "Une erreur inattendue est survenue pendant l’activation de la visibilité.";
 }
 
 export async function activateVisibilityAction(
@@ -37,7 +37,7 @@ export async function activateVisibilityAction(
     } = await supabase.auth.getUser();
 
     if (!user) {
-      return { status: "error", message: "Tu dois etre connecte pour activer ta visibilite." };
+      return { status: "error", message: "Tu dois être connecté pour activer ta visibilité." };
     }
 
     const intent = String(formData.get("intent") ?? "") as VisibilityIntent;
@@ -48,7 +48,7 @@ export async function activateVisibilityAction(
     }
 
     if (!allowedDurations.has(duration)) {
-      return { status: "error", message: "Choisis une duree valide." };
+      return { status: "error", message: "Choisis une durée valide." };
     }
 
     const { data: profile, error: profileError } = await supabase
@@ -64,14 +64,14 @@ export async function activateVisibilityAction(
     if (!profile) {
       return {
         status: "error",
-        message: "Complete ton profil avant d'activer la visibilite."
+        message: "Complète ton profil avant d’activer la visibilité."
       };
     }
 
     if (profile.is_suspended || profile.deleted_at) {
       return {
         status: "error",
-        message: "Ce compte ne peut pas activer la visibilite."
+        message: "Ce compte ne peut pas activer la visibilité."
       };
     }
 
@@ -101,7 +101,7 @@ export async function activateVisibilityAction(
     revalidatePath("/visibility");
     revalidatePath("/profile");
 
-    return { status: "success", message: "Visibilite activee." };
+    return { status: "success", message: "Visibilité activée." };
   } catch (error) {
     return { status: "error", message: getErrorMessage(error) };
   }

@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { ArrowLeft, Inbox, MessageCircle, Send } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Inbox, MessageCircle, Send, ShieldCheck } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { LogoutButton } from "@/components/auth/logout-button";
@@ -18,7 +18,7 @@ export default async function RequestsPage() {
         <section className="w-full max-w-xl rounded-md border border-night-900/10 bg-white p-6 shadow-xl shadow-night-950/8">
           <Logo />
           <h1 className="mt-8 text-3xl font-bold tracking-normal text-night-950">
-            Supabase a configurer
+            Supabase à configurer
           </h1>
           <p className="mt-3 leading-7 text-night-900/72">{getMissingSupabaseMessage()}</p>
           <ButtonLink href="/" variant="secondary" className="mt-8">
@@ -54,15 +54,25 @@ export default async function RequestsPage() {
           Tableau de bord
         </ButtonLink>
 
-        <div className="rounded-md bg-night-950 p-6 text-white shadow-glow">
-          <p className="text-sm font-semibold text-lagoon-100/80">Contact</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-normal sm:text-4xl">
-            Demandes et conversations
-          </h1>
-          <p className="mt-4 max-w-2xl leading-7 text-white/72">
-            Accepte uniquement les demandes qui te semblent claires. Privilegie les
-            lieux publics comme le lobby, le bar ou le restaurant.
-          </p>
+        <div className="overflow-hidden rounded-md border border-night-900/10 bg-white shadow-xl shadow-night-950/8">
+          <section className="bg-[radial-gradient(circle_at_88%_18%,rgba(245,185,76,0.22),transparent_30%),linear-gradient(135deg,#05233f_0%,#061d36_58%,#03162a_100%)] p-6 text-white sm:p-8">
+            <span className="inline-flex items-center gap-2 rounded-full border border-lagoon-300/35 bg-white/8 px-3 py-1.5 text-sm font-bold text-lagoon-100">
+              <MessageCircle className="h-4 w-4" />
+              Contact après consentement
+            </span>
+            <h1 className="mt-5 text-3xl font-bold tracking-normal sm:text-4xl">
+              Demandes et conversations
+            </h1>
+            <p className="mt-4 max-w-2xl leading-7 text-white/72">
+              Accepte uniquement les demandes qui te semblent claires. Privilégie les
+              lieux publics comme le lobby, le bar ou le restaurant.
+            </p>
+            <div className="mt-5 grid gap-3 text-sm font-semibold sm:grid-cols-3">
+              <SafetyPill icon={CheckCircle2} text="Chat après acceptation" />
+              <SafetyPill icon={ShieldCheck} text="Consentement prioritaire" />
+              <SafetyPill icon={MessageCircle} text="Texte uniquement" />
+            </div>
+          </section>
         </div>
 
         {error ? (
@@ -74,16 +84,16 @@ export default async function RequestsPage() {
         <div className="mt-6 grid gap-6 lg:grid-cols-2">
           <RequestColumn
             icon={Inbox}
-            title="Recues"
-            emptyText="Aucune demande recue pour le moment."
+            title="Reçues"
+            emptyText="Aucune demande reçue pour le moment."
             requests={incoming}
             currentUserId={user.id}
             canRespond
           />
           <RequestColumn
             icon={Send}
-            title="Envoyees"
-            emptyText="Aucune demande envoyee pour le moment."
+            title="Envoyées"
+            emptyText="Aucune demande envoyée pour le moment."
             requests={outgoing}
             currentUserId={user.id}
           />
@@ -134,7 +144,7 @@ function RequestColumn({
                       {otherProfile?.username ?? "Profil"}
                     </h3>
                     <p className="mt-1 text-sm leading-6 text-night-900/68">
-                      {otherProfile?.approx_area ?? "Zone non renseignee"}
+                      {otherProfile?.approx_area ?? "Zone non renseignée"}
                     </p>
                   </div>
                   <StatusPill status={request.status} />
@@ -206,14 +216,23 @@ function ResponseForm({
 function StatusPill({ status }: { status: ContactRequestWithProfiles["status"] }) {
   const labelByStatus = {
     pending: "En attente",
-    accepted: "Acceptee",
-    declined: "Refusee",
-    cancelled: "Annulee"
+    accepted: "Acceptée",
+    declined: "Refusée",
+    cancelled: "Annulée"
   };
 
   return (
     <span className="inline-flex min-h-8 items-center rounded-md bg-gold-400/20 px-3 text-xs font-bold uppercase tracking-wide text-night-950">
       {labelByStatus[status]}
+    </span>
+  );
+}
+
+function SafetyPill({ icon: Icon, text }: { icon: typeof ShieldCheck; text: string }) {
+  return (
+    <span className="inline-flex items-center gap-2 rounded-md border border-white/12 bg-white/8 px-3 py-2 text-lagoon-100">
+      <Icon className="h-4 w-4" />
+      {text}
     </span>
   );
 }

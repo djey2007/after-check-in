@@ -1,5 +1,5 @@
 import { redirect, notFound } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, LockKeyhole, MessageCircle, ShieldCheck } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { LogoutButton } from "@/components/auth/logout-button";
@@ -23,7 +23,7 @@ export default async function ChatPage({
         <section className="w-full max-w-xl rounded-md border border-night-900/10 bg-white p-6 shadow-xl shadow-night-950/8">
           <Logo />
           <h1 className="mt-8 text-3xl font-bold tracking-normal text-night-950">
-            Supabase a configurer
+            Supabase à configurer
           </h1>
           <p className="mt-3 leading-7 text-night-900/72">{getMissingSupabaseMessage()}</p>
           <ButtonLink href="/" variant="secondary" className="mt-8">
@@ -71,13 +71,26 @@ export default async function ChatPage({
         </ButtonLink>
 
         <div className="overflow-hidden rounded-md border border-night-900/10 bg-white shadow-sm">
-          <div className="border-b border-night-900/10 bg-night-950 p-5 text-white">
-            <p className="text-sm font-semibold text-lagoon-100/80">Conversation acceptee</p>
-            <h1 className="mt-1 text-2xl font-bold tracking-normal">Chat texte</h1>
+          <div className="border-b border-night-900/10 bg-[radial-gradient(circle_at_88%_18%,rgba(245,185,76,0.18),transparent_30%),linear-gradient(135deg,#05233f_0%,#061d36_58%,#03162a_100%)] p-5 text-white sm:p-6">
+            <span className="inline-flex items-center gap-2 rounded-full border border-lagoon-300/35 bg-white/8 px-3 py-1.5 text-sm font-bold text-lagoon-100">
+              <LockKeyhole className="h-4 w-4" />
+              Conversation acceptée
+            </span>
+            <h1 className="mt-4 text-2xl font-bold tracking-normal">Chat texte</h1>
             <p className="mt-2 text-sm leading-6 text-white/68">
-              Aucun partage d&apos;image, audio ou video dans cette V1. Pour te retrouver,
+              Aucun partage d&apos;image, audio ou vidéo dans cette V1. Pour te retrouver,
               choisis toujours un lieu public.
             </p>
+            <div className="mt-4 flex flex-wrap gap-2 text-xs font-bold text-lagoon-100">
+              <span className="inline-flex items-center gap-2 rounded-md border border-white/12 bg-white/8 px-3 py-2">
+                <MessageCircle className="h-4 w-4" />
+                Texte uniquement
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-md border border-white/12 bg-white/8 px-3 py-2">
+                <ShieldCheck className="h-4 w-4" />
+                Lieux publics recommandés
+              </span>
+            </div>
           </div>
 
           <div className="min-h-[360px] bg-night-950/3 p-4 sm:p-6">
@@ -117,7 +130,7 @@ export default async function ChatPage({
                 <div>
                   <p className="font-bold text-night-950">Aucun message pour le moment</p>
                   <p className="mt-2 max-w-sm text-sm leading-6 text-night-900/68">
-                    La conversation est ouverte apres acceptation. Commence simplement
+                    La conversation est ouverte après acceptation. Commence simplement
                     et propose un lieu public.
                   </p>
                 </div>

@@ -37,7 +37,7 @@ export function ChatMessageForm({
           name="body"
           maxLength={2000}
           rows={2}
-          placeholder="Ecris ton message..."
+          placeholder="Écris ton message..."
           className="min-h-16 flex-1 rounded-md border border-night-900/15 bg-white px-4 py-3 text-base text-night-950 outline-none transition focus:border-lagoon-500 focus:ring-4 focus:ring-lagoon-500/15"
           required
         />
