@@ -41,12 +41,12 @@ export function ProfileSummary({ profile }: ProfileSummaryProps) {
         <SummaryItem
           icon={Languages}
           label="Langues"
-          value={profile.languages.length ? profile.languages.join(", ") : "Non renseigne"}
+          value={profile.languages.length ? profile.languages.join(", ") : "Non renseigné"}
         />
         <SummaryItem
           icon={Sparkles}
-          label="Interets"
-          value={profile.interests.length ? profile.interests.join(", ") : "Non renseigne"}
+          label="Intérêts"
+          value={profile.interests.length ? profile.interests.join(", ") : "Non renseigné"}
         />
       </div>
     </article>
