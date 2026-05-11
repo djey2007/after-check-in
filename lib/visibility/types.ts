@@ -21,7 +21,7 @@ export const initialVisibilityFormState: VisibilityFormState = {
 };
 
 export const visibilityIntentLabels: Record<VisibilityIntent, string> = {
-  dinner: "Diner",
+  dinner: "Dîner",
   drink: "Boire un verre",
   networking: "Networking",
   local_outing: "Sortie locale",
@@ -33,4 +33,3 @@ export const visibilityDurationLabels: Record<3 | 6 | 24, string> = {
   6: "6 heures",
   24: "24 heures"
 };
-

@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { ArrowLeft, Compass, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Compass, MapPinned, Radar, ShieldCheck, Sparkles, UsersRound } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { LogoutButton } from "@/components/auth/logout-button";
@@ -18,7 +18,7 @@ export default async function DiscoverPage() {
         <section className="w-full max-w-xl rounded-md border border-night-900/10 bg-white p-6 shadow-xl shadow-night-950/8">
           <Logo />
           <h1 className="mt-8 text-3xl font-bold tracking-normal text-night-950">
-            Supabase a configurer
+            Supabase à configurer
           </h1>
           <p className="mt-3 leading-7 text-night-900/72">{getMissingSupabaseMessage()}</p>
           <ButtonLink href="/" variant="secondary" className="mt-8">
@@ -55,30 +55,52 @@ export default async function DiscoverPage() {
           Tableau de bord
         </ButtonLink>
 
-        <div className="grid gap-6 lg:grid-cols-[0.78fr_1.22fr]">
-          <aside className="rounded-md border border-night-900/10 bg-white p-6 shadow-sm">
-            <div className="flex h-24 w-24 items-center justify-center rounded-md bg-lagoon-100 text-night-950">
-              <Compass className="h-10 w-10" />
-            </div>
-            <h1 className="mt-6 text-3xl font-bold tracking-normal text-night-950">Decouverte</h1>
-            <p className="mt-3 leading-7 text-night-900/72">
-              Profils visibles dans ta zone approximative avec leur intention en cours.
-            </p>
-            {profile ? (
-              <div className="mt-5 rounded-md bg-gold-400/20 px-4 py-3 text-sm font-semibold leading-6 text-night-950">
-                Ta zone actuelle: {profile.approx_area}
+        <div className="overflow-hidden rounded-md border border-night-900/10 bg-white shadow-xl shadow-night-950/8">
+          <div className="grid gap-6 bg-[radial-gradient(circle_at_88%_18%,rgba(245,185,76,0.24),transparent_30%),linear-gradient(135deg,#05233f_0%,#061d36_58%,#03162a_100%)] p-6 text-white sm:p-8 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-lagoon-300/35 bg-white/8 px-3 py-1.5 text-sm font-bold text-lagoon-100">
+                <Radar className="h-4 w-4" />
+                Découverte active
               </div>
-            ) : null}
-            <div className="mt-6 rounded-md border border-night-900/10 p-4">
-              <ShieldCheck className="h-5 w-5 text-lagoon-500" />
-              <p className="mt-3 text-sm font-semibold text-night-950">Cadre de securite</p>
-              <p className="mt-2 text-sm leading-6 text-night-900/68">
-                La decouverte exclut les profils bloques, suspendus ou expires.
+              <h1 className="mt-5 max-w-2xl text-3xl font-bold tracking-normal sm:text-4xl">
+                Les personnes disponibles autour de toi.
+              </h1>
+              <p className="mt-4 max-w-2xl leading-7 text-white/72">
+                Découvre uniquement les profils visibles dans ta zone approximative.
+                Les demandes restent consenties, et le chat s’ouvre seulement après acceptation.
               </p>
             </div>
-          </aside>
+            {profile ? (
+              <div className="rounded-md border border-white/12 bg-white/8 px-4 py-3 text-sm font-semibold leading-6">
+                <span className="flex items-center gap-2 text-lagoon-100">
+                  <MapPinned className="h-4 w-4" />
+                  Ta zone actuelle
+                </span>
+                <p className="mt-1 text-lg font-bold text-white">{profile.approx_area}</p>
+              </div>
+            ) : null}
+          </div>
 
-          <section>
+          <div className="grid gap-6 p-5 sm:p-6 lg:grid-cols-[0.34fr_0.66fr] lg:p-8">
+            <aside className="grid content-start gap-4">
+              <InfoCard
+                icon={UsersRound}
+                title={`${profiles.length} profil${profiles.length > 1 ? "s" : ""}`}
+                text="Disponibles maintenant dans ta zone."
+              />
+              <InfoCard
+                icon={ShieldCheck}
+                title="Cadre de sécurité"
+                text="Profils bloqués, suspendus ou expirés exclus automatiquement."
+              />
+              <InfoCard
+                icon={Sparkles}
+                title="Intention claire"
+                text="Chaque profil affiche son intention du moment avant toute demande."
+              />
+            </aside>
+
+            <section>
             {error ? (
               <div className="rounded-md border border-red-200 bg-red-50 p-5 text-red-800">
                 {error.message}
@@ -86,29 +108,50 @@ export default async function DiscoverPage() {
             ) : null}
 
             {profiles.length > 0 ? (
-              <div className="grid gap-4">
+              <div className="grid gap-4 xl:grid-cols-2">
                 {profiles.map((profileItem) => (
                   <DiscoverCard key={profileItem.id} profile={profileItem} />
                 ))}
               </div>
             ) : (
-              <div className="rounded-md border border-night-900/10 bg-white p-6 shadow-sm">
-                <h2 className="text-xl font-bold tracking-normal text-night-950">
+              <div className="rounded-md border border-night-900/10 bg-night-950/3 p-6">
+                <div className="flex h-14 w-14 items-center justify-center rounded-md bg-lagoon-100 text-lagoon-600">
+                  <Compass className="h-7 w-7" />
+                </div>
+                <h2 className="mt-5 text-xl font-bold tracking-normal text-night-950">
                   Aucun profil visible pour le moment
                 </h2>
                 <p className="mt-3 leading-7 text-night-900/72">
-                  Tu verras ici les personnes qui ont active leur visibilite dans la
-                  meme zone approximative que toi.
+                  Tu verras ici les personnes qui ont activé leur visibilité dans la
+                  même zone approximative que toi.
                 </p>
                 <ButtonLink href="/visibility" className="mt-5">
-                  Activer la visibilite
+                  Activer ma visibilité
                 </ButtonLink>
               </div>
             )}
-          </section>
+            </section>
+          </div>
         </div>
       </section>
     </main>
   );
 }
 
+function InfoCard({
+  icon: Icon,
+  title,
+  text
+}: {
+  icon: typeof UsersRound;
+  title: string;
+  text: string;
+}) {
+  return (
+    <article className="rounded-md border border-night-900/10 bg-night-950/3 p-4">
+      <Icon className="h-5 w-5 text-lagoon-500" />
+      <h2 className="mt-3 font-bold text-night-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-night-900/68">{text}</p>
+    </article>
+  );
+}
