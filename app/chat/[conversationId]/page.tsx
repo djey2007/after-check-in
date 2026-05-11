@@ -1,12 +1,13 @@
 import { redirect, notFound } from "next/navigation";
-import { ArrowLeft, SendHorizonal } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getMissingSupabaseMessage } from "@/lib/supabase/config";
 import { getConversationForUser, getMessagesForConversation } from "@/lib/contact/queries";
-import { sendMessageAction } from "@/app/requests/actions";
+import { ChatAutoRefresh } from "@/components/chat/chat-auto-refresh";
+import { ChatMessageForm } from "@/components/chat/chat-message-form";
 
 export default async function ChatPage({
   params
@@ -57,6 +58,7 @@ export default async function ChatPage({
 
   return (
     <main className="min-h-screen">
+      <ChatAutoRefresh />
       <header className="mx-auto flex w-full max-w-4xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
         <Logo compact />
         <LogoutButton />
@@ -121,29 +123,13 @@ export default async function ChatPage({
                 </div>
               </div>
             )}
+            <div id="chat-bottom" />
           </div>
 
-          <form action={sendMessageAction} className="border-t border-night-900/10 bg-white p-4">
-            <input type="hidden" name="conversationId" value={conversation.id} />
-            <input type="hidden" name="otherParticipantId" value={otherParticipantId} />
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <textarea
-                name="body"
-                maxLength={2000}
-                rows={2}
-                placeholder="Ecris ton message..."
-                className="min-h-16 flex-1 rounded-md border border-night-900/15 bg-white px-4 py-3 text-base text-night-950 outline-none transition focus:border-lagoon-500 focus:ring-4 focus:ring-lagoon-500/15"
-                required
-              />
-              <button
-                type="submit"
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-lagoon-500 px-5 py-2.5 text-sm font-semibold text-white shadow-glow transition hover:bg-lagoon-400"
-              >
-                <SendHorizonal className="h-4 w-4" />
-                Envoyer
-              </button>
-            </div>
-          </form>
+          <ChatMessageForm
+            conversationId={conversation.id}
+            otherParticipantId={otherParticipantId}
+          />
         </div>
       </section>
     </main>
