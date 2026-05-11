@@ -1,7 +1,21 @@
+"use client";
+
+import { useActionState } from "react";
 import { Trash2 } from "lucide-react";
 import { deleteAccountAction } from "@/app/settings/actions";
+import { AuthMessage } from "@/components/auth/auth-message";
+
+const initialDeleteAccountFormState = {
+  status: "idle" as const,
+  message: ""
+};
 
 export function DeleteAccountForm() {
+  const [state, action] = useActionState(
+    deleteAccountAction,
+    initialDeleteAccountFormState
+  );
+
   return (
     <section className="rounded-md border border-red-200 bg-red-50 p-5 text-night-950">
       <Trash2 className="h-6 w-6 text-red-700" />
@@ -11,7 +25,7 @@ export function DeleteAccountForm() {
         Ton profil ne sera plus visible dans la découverte.
       </p>
 
-      <form action={deleteAccountAction} className="mt-4 grid gap-3">
+      <form action={action} className="mt-4 grid gap-3">
         <label className="grid gap-2 text-sm font-semibold">
           Écris SUPPRIMER pour confirmer
           <input
@@ -20,6 +34,7 @@ export function DeleteAccountForm() {
             required
           />
         </label>
+        <AuthMessage status={state.status} message={state.message} />
         <button
           type="submit"
           className="inline-flex min-h-11 items-center justify-center rounded-md bg-red-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-800"

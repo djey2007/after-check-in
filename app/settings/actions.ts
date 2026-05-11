@@ -4,6 +4,11 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
+type DeleteAccountFormState = {
+  status: "idle" | "error";
+  message: string;
+};
+
 export async function unblockUserAction(formData: FormData) {
   const supabase = await createSupabaseServerClient();
 
@@ -35,17 +40,23 @@ export async function unblockUserAction(formData: FormData) {
   revalidatePath("/discover");
 }
 
-export async function deleteAccountAction(formData: FormData) {
+export async function deleteAccountAction(
+  _previousState: DeleteAccountFormState,
+  formData: FormData
+): Promise<DeleteAccountFormState> {
   const supabase = await createSupabaseServerClient();
 
   if (!supabase) {
-    return;
+    return { status: "error", message: "Configuration Supabase manquante." };
   }
 
   const confirmation = String(formData.get("confirmation") ?? "").trim();
 
   if (confirmation !== "SUPPRIMER") {
-    return;
+    return {
+      status: "error",
+      message: "Écris SUPPRIMER pour confirmer la suppression du compte."
+    };
   }
 
   const {
@@ -53,24 +64,17 @@ export async function deleteAccountAction(formData: FormData) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return;
+    return { status: "error", message: "Tu dois être connecté pour supprimer ton compte." };
   }
 
-  const now = new Date().toISOString();
+  const { error } = await supabase.rpc("soft_delete_current_user");
 
-  await supabase
-    .from("visibility_sessions")
-    .update({ ended_at: now })
-    .eq("user_id", user.id)
-    .is("ended_at", null);
-
-  await supabase
-    .from("profiles")
-    .update({
-      deleted_at: now,
-      is_suspended: true
-    })
-    .eq("id", user.id);
+  if (error) {
+    return {
+      status: "error",
+      message: `La suppression du compte a échoué : ${error.message}`
+    };
+  }
 
   await supabase.auth.signOut();
   redirect("/");

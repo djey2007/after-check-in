@@ -142,8 +142,7 @@ export async function saveProfileAction(
       avatarUrl = publicUrl.publicUrl;
     }
 
-    const { error } = await supabase.from("profiles").upsert({
-      id: user.id,
+    const profilePayload = {
       username,
       age,
       avatar_url: avatarUrl,
@@ -152,9 +151,16 @@ export async function saveProfileAction(
       interests,
       travel_type: travelType,
       approx_area: approxArea,
-      location_cell: locationCell || null,
-      is_adult_confirmed: true
-    });
+      location_cell: locationCell || null
+    };
+
+    const { error } = existingProfile
+      ? await supabase.from("profiles").update(profilePayload).eq("id", user.id)
+      : await supabase.from("profiles").insert({
+          id: user.id,
+          ...profilePayload,
+          is_adult_confirmed: true
+        });
 
     if (error) {
       if (error.message.toLowerCase().includes("profiles")) {

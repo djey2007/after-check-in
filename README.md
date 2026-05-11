@@ -169,6 +169,17 @@ Pour afficher et gerer les utilisateurs bloques dans `/settings`:
 3. Copier le contenu de `supabase/migrations/0009_blocked_users_settings.sql`.
 4. Cliquer sur **Run**.
 
+Pour appliquer le durcissement securite MVP:
+
+1. Ouvrir Supabase.
+2. Aller dans **SQL Editor**.
+3. Copier le contenu de `supabase/migrations/0010_security_hardening.sql`.
+4. Cliquer sur **Run**.
+
+Cette migration ajoute les RPC securisees `soft_delete_current_user()` et
+`send_contact_request(...)`, limite les updates directes sur `profiles` aux
+champs de profil autorises, et securise la creation des demandes de contact.
+
 ## Documents projet
 
 - [Product brief](docs/product-brief.md)

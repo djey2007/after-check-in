@@ -53,11 +53,9 @@ export async function sendContactRequestAction(
       return { status: "error", message: "Le message doit faire 240 caractères maximum." };
     }
 
-    const { error } = await supabase.from("contact_requests").insert({
-      sender_id: user.id,
-      receiver_id: receiverId,
-      message,
-      status: "pending"
+    const { error } = await supabase.rpc("send_contact_request", {
+      target_user_id: receiverId,
+      message
     });
 
     if (error) {
