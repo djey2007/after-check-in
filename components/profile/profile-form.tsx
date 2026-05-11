@@ -20,12 +20,12 @@ export function ProfileForm({ profile }: ProfileFormProps) {
   const [state, action] = useActionState(saveProfileAction, initialProfileFormState);
   const [locationCell, setLocationCell] = useState(profile?.location_cell ?? "");
   const [locationStatus, setLocationStatus] = useState(
-    profile?.location_cell ? "Position approximative activee." : ""
+    profile?.location_cell ? "Position approximative activée." : ""
   );
 
   function requestApproxLocation() {
     if (!("geolocation" in navigator)) {
-      setLocationStatus("Ton navigateur ne permet pas la geolocalisation.");
+      setLocationStatus("Ton navigateur ne permet pas la géolocalisation.");
       return;
     }
 
@@ -39,17 +39,17 @@ export function ProfileForm({ profile }: ProfileFormProps) {
         );
 
         if (!cell) {
-          setLocationStatus("Position impossible a convertir en zone approximative.");
+          setLocationStatus("Position impossible à convertir en zone approximative.");
           return;
         }
 
         setLocationCell(cell);
         setLocationStatus(
-          "Position approximative activee. Aucune coordonnee GPS exacte ne sera enregistree."
+          "Position approximative activée. Aucune coordonnée GPS exacte ne sera enregistrée."
         );
       },
       () => {
-        setLocationStatus("Position non autorisee. Tu peux garder la zone saisie manuellement.");
+        setLocationStatus("Position non autorisée. Tu peux garder la zone saisie manuellement.");
       },
       {
         enableHighAccuracy: false,
@@ -77,7 +77,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
         </label>
 
         <label className="grid gap-2 text-sm font-semibold text-night-950">
-          Age
+          Âge
           <input
             name="age"
             type="number"
@@ -121,7 +121,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
             <p className="text-sm font-bold text-night-950">Position approximative</p>
             <p className="mt-1 text-sm leading-6 text-night-900/68">
               Optionnel: utilise le GPS pour calculer une zone large, sans stocker
-              tes coordonnees exactes.
+              tes coordonnées exactes.
             </p>
           </div>
           <button
@@ -145,7 +145,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
           name="bio"
           maxLength={240}
           rows={4}
-          placeholder="Une phrase simple pour te presenter."
+          placeholder="Une phrase simple pour te présenter."
           defaultValue={profile?.bio ?? ""}
           className="rounded-md border border-night-900/12 bg-white px-4 py-3 text-base font-normal outline-none transition focus:border-lagoon-500 focus:ring-4 focus:ring-lagoon-500/15"
         />
@@ -153,17 +153,17 @@ export function ProfileForm({ profile }: ProfileFormProps) {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="grid gap-2 text-sm font-semibold text-night-950">
-          Langues parlees
+          Langues parlées
           <input
             name="languages"
-            placeholder="Francais, anglais"
+            placeholder="Français, anglais"
             defaultValue={profile?.languages.join(", ") ?? ""}
             className="min-h-12 rounded-md border border-night-900/12 bg-white px-4 text-base font-normal outline-none transition focus:border-lagoon-500 focus:ring-4 focus:ring-lagoon-500/15"
           />
         </label>
 
         <label className="grid gap-2 text-sm font-semibold text-night-950">
-          Centres d&apos;interet
+          Centres d&apos;intérêt
           <input
             name="interests"
             placeholder="Cuisine, sport, culture"
@@ -174,7 +174,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
       </div>
 
       <label className="grid gap-2 text-sm font-semibold text-night-950">
-        Type de deplacement
+        Type de déplacement
         <select
           name="travel_type"
           defaultValue={profile?.travel_type ?? "business"}
@@ -189,7 +189,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
       </label>
 
       <div className="rounded-md bg-lagoon-100 px-4 py-3 text-sm font-semibold leading-6 text-night-950">
-        Ne renseigne jamais de numero de chambre, d&apos;adresse precise ou de position GPS.
+        Ne renseigne jamais de numéro de chambre, d&apos;adresse précise ou de position GPS.
       </div>
 
       <AuthMessage status={state.status} message={state.message} />

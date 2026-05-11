@@ -38,7 +38,7 @@ function getErrorMessage(error: unknown) {
     return error.message;
   }
 
-  return "Une erreur inattendue est survenue pendant l'enregistrement du profil.";
+    return "Une erreur inattendue est survenue pendant l’enregistrement du profil.";
 }
 
 export async function saveProfileAction(
@@ -62,7 +62,7 @@ export async function saveProfileAction(
     if (!user) {
       return {
         status: "error",
-        message: "Tu dois etre connecte pour enregistrer ton profil."
+        message: "Tu dois être connecté pour enregistrer ton profil."
       };
     }
 
@@ -77,25 +77,25 @@ export async function saveProfileAction(
     const avatar = formData.get("avatar");
 
     if (username.length < 2 || username.length > 32) {
-      return { status: "error", message: "Le pseudo doit contenir entre 2 et 32 caracteres." };
+      return { status: "error", message: "Le pseudo doit contenir entre 2 et 32 caractères." };
     }
 
     if (!Number.isInteger(age) || age < 18 || age > 120) {
-      return { status: "error", message: "L'age doit etre superieur ou egal a 18 ans." };
+      return { status: "error", message: "L’âge doit être supérieur ou égal à 18 ans." };
     }
 
     if (bio.length > 240) {
-      return { status: "error", message: "La bio doit faire 240 caracteres maximum." };
+      return { status: "error", message: "La bio doit faire 240 caractères maximum." };
     }
 
     if (approxArea.length < 2 || approxArea.length > 80) {
-      return { status: "error", message: "La zone approximative doit faire entre 2 et 80 caracteres." };
+      return { status: "error", message: "La zone approximative doit faire entre 2 et 80 caractères." };
     }
 
     if (looksLikeRoomNumber(approxArea) || looksLikeRoomNumber(bio)) {
       return {
         status: "error",
-        message: "Ne renseigne jamais de numero de chambre. Utilise seulement une zone approximative."
+        message: "Ne renseigne jamais de numéro de chambre. Utilise seulement une zone approximative."
       };
     }
 
@@ -104,7 +104,7 @@ export async function saveProfileAction(
     }
 
     if (!["business", "personal", "both"].includes(travelType)) {
-      return { status: "error", message: "Type de deplacement invalide." };
+      return { status: "error", message: "Type de déplacement invalide." };
     }
 
     const { data: existingProfile } = await supabase
@@ -118,7 +118,7 @@ export async function saveProfileAction(
       const extension = getAvatarExtension(avatar.type);
 
       if (!extension) {
-        return { status: "error", message: "La photo doit etre en JPG, PNG ou WebP." };
+        return { status: "error", message: "La photo doit être en JPG, PNG ou WebP." };
       }
 
       if (avatar.size > 2 * 1024 * 1024) {
@@ -160,7 +160,7 @@ export async function saveProfileAction(
       if (error.message.toLowerCase().includes("profiles")) {
         return {
           status: "error",
-          message: "La table profiles n'existe pas encore dans Supabase. Execute la migration SQL fournie dans le projet."
+          message: "La table profiles n’existe pas encore dans Supabase. Exécute la migration SQL fournie dans le projet."
         };
       }
 
@@ -170,7 +170,7 @@ export async function saveProfileAction(
     revalidatePath("/profile");
     revalidatePath("/dashboard");
 
-    return { status: "success", message: "Profil enregistre." };
+    return { status: "success", message: "Profil enregistré." };
   } catch (error) {
     return { status: "error", message: getErrorMessage(error) };
   }
