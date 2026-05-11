@@ -9,7 +9,7 @@ type LogoProps = {
 
 export function Logo({ className, compact = false, size = "default" }: LogoProps) {
   const isLarge = size === "large";
-  const imageWidth = isLarge ? 360 : compact ? 180 : 260;
+  const imageWidth = isLarge ? 280 : compact ? 180 : 260;
   const imageHeight = Math.round(imageWidth / 2.13);
 
   return (
@@ -22,7 +22,7 @@ export function Logo({ className, compact = false, size = "default" }: LogoProps
         className={cn(
           "h-auto rounded-md object-contain",
           isLarge
-            ? "w-44 sm:w-72 lg:w-80"
+            ? "w-36 sm:w-48 lg:w-56"
             : compact
               ? "w-28 sm:w-36"
               : "w-40 sm:w-52"

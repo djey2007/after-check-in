@@ -1,18 +1,22 @@
 import {
+  BriefcaseBusiness,
   Clock3,
   Coffee,
   Handshake,
   Hotel,
   MapPinned,
   MessageCircle,
+  Moon,
   ShieldCheck,
+  Route,
+  UserRound,
   Utensils
 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { PublicHeader } from "@/components/public-header";
 
 const intents = [
-  { label: "Diner", icon: Utensils },
+  { label: "Dîner", icon: Utensils },
   { label: "Boire un verre", icon: Coffee },
   { label: "Networking", icon: Handshake },
   { label: "Sortie locale", icon: MapPinned },
@@ -20,10 +24,33 @@ const intents = [
 ];
 
 const steps = [
-  "Complete ton profil",
+  "Complète ton profil",
   "Choisis ton intention",
-  "Active ta visibilite",
-  "Echange apres acceptation"
+  "Active ta visibilité",
+  "Échange après acceptation"
+];
+
+const travelerProfiles = [
+  {
+    title: "Professionnels en mission",
+    text: "Trouver une table ou un verre après une journée dense, sans perdre de temps.",
+    icon: BriefcaseBusiness
+  },
+  {
+    title: "Consultants et commerciaux",
+    text: "Créer un moment utile entre deux rendez-vous, dans un cadre simple et clair.",
+    icon: Route
+  },
+  {
+    title: "Voyageurs solo",
+    text: "Rompre la solitude d’une soirée d’hôtel sans partager sa localisation précise.",
+    icon: UserRound
+  },
+  {
+    title: "Soirées étape à l’hôtel",
+    text: "Transformer une halte en opportunité conviviale, toujours dans des lieux publics.",
+    icon: Moon
+  }
 ];
 
 export default function Home() {
@@ -35,7 +62,7 @@ export default function Home() {
         <div>
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-lagoon-500/20 bg-white/85 px-3 py-1 text-sm font-semibold text-night-900 shadow-sm backdrop-blur">
             <ShieldCheck className="h-4 w-4 text-lagoon-500" />
-            Social, temporaire, sans localisation precise
+            Social, temporaire, sans localisation précise
           </div>
 
           <h1 className="max-w-3xl text-5xl font-bold leading-tight tracking-normal text-night-950 sm:text-6xl lg:text-7xl">
@@ -43,29 +70,34 @@ export default function Home() {
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-night-900/76 sm:text-xl">
-            After Check-in transforme les soirees d&apos;hotel en opportunites simples:
-            diner, boire un verre, networker ou sortir avec des personnes proches,
-            disponibles et consentantes.
+            After Check-in transforme les soirées d&apos;hôtel en moments simples et
+            conviviaux : dîner, boire un verre, networker ou sortir avec des
+            personnes proches, disponibles et consentantes.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <ButtonLink href="/signup" className="w-full px-7 sm:w-auto">
-              Creer un compte
+              Créer un compte
             </ButtonLink>
             <ButtonLink href="/login" variant="secondary" className="w-full sm:w-auto">
               Se connecter
             </ButtonLink>
           </div>
 
+          <p className="mt-4 max-w-xl text-sm font-semibold leading-6 text-night-900/64">
+            Visible uniquement quand tu le décides. Jamais de numéro de chambre.
+            Jamais de localisation précise.
+          </p>
+
           <div className="mt-8 grid gap-3 text-sm font-semibold text-night-900/72 sm:grid-cols-3">
             <div className="rounded-md border border-night-900/10 bg-white/72 px-4 py-3 shadow-sm backdrop-blur">
-              Reserve aux majeurs
+              Réservé aux majeurs
             </div>
             <div className="rounded-md border border-night-900/10 bg-white/72 px-4 py-3 shadow-sm backdrop-blur">
-              Lieux publics recommandes
+              Lieux publics recommandés
             </div>
             <div className="rounded-md border border-night-900/10 bg-white/72 px-4 py-3 shadow-sm backdrop-blur">
-              Aucun numero de chambre
+              Aucun numéro de chambre
             </div>
           </div>
         </div>
@@ -106,7 +138,7 @@ export default function Home() {
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               <ProfilePreview
                 name="Camille"
-                intent="Diner"
+                intent="Dîner"
                 area="Bordeaux centre"
                 time="2h restantes"
               />
@@ -118,6 +150,22 @@ export default function Home() {
               />
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pb-4 sm:px-6 lg:px-8">
+        <div className="mb-5 max-w-2xl">
+          <p className="text-sm font-bold uppercase tracking-wide text-lagoon-500">
+            Pensé pour les voyageurs en déplacement
+          </p>
+          <h2 className="mt-2 text-2xl font-bold tracking-normal text-night-950 sm:text-3xl">
+            Une présence sociale utile, seulement quand elle a du sens.
+          </h2>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {travelerProfiles.map((profile) => (
+            <AudienceCard key={profile.title} {...profile} />
+          ))}
         </div>
       </section>
 
@@ -137,21 +185,41 @@ export default function Home() {
       <section className="mx-auto grid max-w-6xl gap-5 px-4 py-12 sm:px-6 lg:grid-cols-3 lg:px-8">
         <Feature
           icon={Clock3}
-          title="Visibilite temporaire"
-          text="Active ta disponibilite pour 3h, 6h ou 24h. A expiration, ton profil disparait automatiquement."
+          title="Visibilité temporaire"
+          text="Active ta disponibilité pour 3h, 6h ou 24h. À expiration, ton profil disparaît automatiquement."
         />
         <Feature
           icon={MapPinned}
           title="Zone approximative"
-          text="La decouverte fonctionne par quartier ou zone libre, sans GPS exact, distance precise ou numero de chambre."
+          text="La découverte fonctionne par quartier ou zone libre, sans GPS exact, distance précise ou numéro de chambre."
         />
         <Feature
           icon={ShieldCheck}
           title="Consentement prioritaire"
-          text="Les demandes peuvent etre acceptees ou refusees. Le chat texte devient disponible uniquement apres acceptation."
+          text="Les demandes peuvent être acceptées ou refusées. Le chat texte devient disponible uniquement après acceptation."
         />
       </section>
     </main>
+  );
+}
+
+function AudienceCard({
+  icon: Icon,
+  title,
+  text
+}: {
+  icon: typeof BriefcaseBusiness;
+  title: string;
+  text: string;
+}) {
+  return (
+    <article className="rounded-md border border-night-900/10 bg-white/82 p-5 shadow-sm backdrop-blur">
+      <div className="flex h-10 w-10 items-center justify-center rounded-md bg-night-950 text-white">
+        <Icon className="h-5 w-5" />
+      </div>
+      <h3 className="mt-5 font-bold tracking-normal text-night-950">{title}</h3>
+      <p className="mt-2 text-sm leading-6 text-night-900/68">{text}</p>
+    </article>
   );
 }
 
